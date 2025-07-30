@@ -56,6 +56,7 @@ export const mockRestaurants = [
     cuisine: 'South Indian',
     rating: 4.5,
     deliveryTime: '25-30 mins',
+    distance: '0.8 km',
     image: '/api/placeholder/200/150',
     deals: '20% off on orders above ₹200',
     items: [
@@ -70,6 +71,7 @@ export const mockRestaurants = [
     cuisine: 'Vegetarian',
     rating: 4.3,
     deliveryTime: '20-25 mins',
+    distance: '1.2 km',
     image: '/api/placeholder/200/150',
     deals: 'Free delivery on orders above ₹150',
     items: [
@@ -84,6 +86,7 @@ export const mockRestaurants = [
     cuisine: 'Non-Vegetarian',
     rating: 4.6,
     deliveryTime: '35-40 mins',
+    distance: '2.5 km',
     image: '/api/placeholder/200/150',
     deals: 'Free drink with any biryani',
     items: [
@@ -157,25 +160,77 @@ export const mockNotifications = [
     type: 'traffic',
     urgent: true,
     time: '5 minutes ago',
-    source: 'Traffic Police'
+    source: 'Traffic Police',
+    hasAudio: true,
+    duration: '0:45'
   },
   {
     id: '2',
-    title: 'WhatsApp Message',
-    message: 'Family Group: Mom sent a photo',
+    title: 'WhatsApp Voice Message',
+    message: 'Mom: "Call me when you reach home safely"',
     type: 'social',
     urgent: false,
     time: '10 minutes ago',
-    source: 'WhatsApp'
+    source: 'WhatsApp',
+    socialType: 'whatsapp',
+    hasAudio: true,
+    duration: '0:12'
   },
   {
     id: '3',
+    title: 'Instagram Story',
+    message: 'John tagged you in a story',
+    type: 'social',
+    urgent: false,
+    time: '15 minutes ago',
+    source: 'Instagram',
+    socialType: 'instagram',
+    hasAudio: false
+  },
+  {
+    id: '4',
+    title: 'Telegram Voice Note',
+    message: 'Tech Group: "Check out this new car tech!"',
+    type: 'social',
+    urgent: false,
+    time: '20 minutes ago',
+    source: 'Telegram',
+    socialType: 'telegram',
+    hasAudio: true,
+    duration: '0:28'
+  },
+  {
+    id: '5',
+    title: 'Facebook Messenger',
+    message: 'Sarah: "Are we still meeting tomorrow?"',
+    type: 'social',
+    urgent: false,
+    time: '30 minutes ago',
+    source: 'Facebook Messenger',
+    socialType: 'facebook',
+    hasAudio: false
+  },
+  {
+    id: '6',
+    title: 'Twitter Mention',
+    message: '@TechGuru mentioned you in a tweet about electric cars',
+    type: 'social',
+    urgent: false,
+    time: '45 minutes ago',
+    source: 'Twitter',
+    socialType: 'twitter',
+    hasAudio: false
+  },
+  {
+    id: '7',
     title: 'CSK Match Update',
     message: 'CSK beats MI by 60 runs! 🏆',
     type: 'sports',
     urgent: false,
     time: '1 hour ago',
-    source: 'IPL Official'
+    source: 'IPL Official',
+    hasAudio: true,
+    duration: '0:35'
   },
 ];
 

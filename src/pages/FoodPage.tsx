@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Heart, Star, Clock, Truck, Leaf, CircleDot } from 'lucide-react';
+import { Search, Heart, Star, Clock, Truck, Leaf, CircleDot, MapPin, Filter } from 'lucide-react';
 import { NeuroCard } from '@/components/ui/NeuroCard';
 import { VoiceButton } from '@/components/ui/VoiceButton';
 import { mockRestaurants } from '@/data/mockData';
@@ -10,11 +10,25 @@ export const FoodPage = () => {
   const [selectedRestaurant, setSelectedRestaurant] = useState<string | null>(null);
   const [favorites, setFavorites] = useState<string[]>(['1']);
   const [cart, setCart] = useState<{[key: string]: number}>({});
+  const [sortBy, setSortBy] = useState<'distance' | 'rating' | 'delivery'>('distance');
 
-  const filteredRestaurants = mockRestaurants.filter(restaurant =>
-    restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    restaurant.cuisine.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredRestaurants = mockRestaurants
+    .filter(restaurant =>
+      restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      restaurant.cuisine.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .sort((a, b) => {
+      switch (sortBy) {
+        case 'distance':
+          return parseFloat(a.distance) - parseFloat(b.distance);
+        case 'rating':
+          return b.rating - a.rating;
+        case 'delivery':
+          return parseInt(a.deliveryTime) - parseInt(b.deliveryTime);
+        default:
+          return 0;
+      }
+    });
 
   const handleVoiceCommand = (command: string) => {
     console.log('Food voice command:', command);
@@ -95,20 +109,43 @@ export const FoodPage = () => {
         ))}
       </div>
 
-      {/* Search */}
+      {/* Search and Filters */}
       {activeTab === 'restaurants' && (
-        <NeuroCard variant="inset">
-          <div className="flex items-center gap-3">
-            <Search size={20} className="text-muted-foreground" />
-            <input
-              type="text"
-              placeholder="Search restaurants, dishes..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="flex-1 bg-transparent border-none outline-none text-car-body"
-            />
+        <div className="space-y-3">
+          <NeuroCard variant="inset">
+            <div className="flex items-center gap-3">
+              <Search size={20} className="text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Search restaurants, dishes..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="flex-1 bg-transparent border-none outline-none text-car-body"
+              />
+            </div>
+          </NeuroCard>
+
+          {/* Sort Options */}
+          <div className="flex items-center gap-2 overflow-x-auto">
+            <Filter size={16} className="text-muted-foreground flex-shrink-0" />
+            {[
+              { id: 'distance', label: 'Nearest', icon: '📍' },
+              { id: 'rating', label: 'Top Rated', icon: '⭐' },
+              { id: 'delivery', label: 'Fastest', icon: '🚀' }
+            ].map((option) => (
+              <button
+                key={option.id}
+                onClick={() => setSortBy(option.id as any)}
+                className={`neuro-button px-3 py-2 flex items-center gap-2 whitespace-nowrap text-sm ${
+                  sortBy === option.id ? 'neuro-button-primary' : ''
+                }`}
+              >
+                <span>{option.icon}</span>
+                {option.label}
+              </button>
+            ))}
           </div>
-        </NeuroCard>
+        </div>
       )}
 
       {/* AI Food Suggestion */}
@@ -158,11 +195,15 @@ export const FoodPage = () => {
                     </div>
                     <p className="text-sm text-muted-foreground mb-2">{restaurant.cuisine}</p>
                     
-                    {/* Rating and Delivery Info */}
+                    {/* Rating, Delivery Info, and Distance */}
                     <div className="flex items-center gap-4 text-sm">
                       <div className="flex items-center gap-1">
                         <Star size={14} className="text-warning fill-warning" />
                         <span>{restaurant.rating}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <MapPin size={14} className="text-info" />
+                        <span className="text-info font-medium">{restaurant.distance}</span>
                       </div>
                       <div className="flex items-center gap-1">
                         <Clock size={14} className="text-muted-foreground" />

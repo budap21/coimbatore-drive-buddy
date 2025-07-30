@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Volume2, Heart, Filter, Settings, Bell, Newspaper, Trophy, MessageSquare } from 'lucide-react';
+import { Volume2, Heart, Filter, Settings, Bell, Newspaper, Trophy, MessageSquare, Play, Pause, SkipForward } from 'lucide-react';
 import { NeuroCard } from '@/components/ui/NeuroCard';
 import { VoiceButton } from '@/components/ui/VoiceButton';
+import { SocialNotificationCard } from '@/components/ui/SocialNotificationCard';
 import { mockNews, mockIPL, mockNotifications } from '@/data/mockData';
 
 export const SocialPage = () => {
@@ -9,6 +10,8 @@ export const SocialPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [readingAloud, setReadingAloud] = useState<string | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
+  const [playingNotification, setPlayingNotification] = useState<string | null>(null);
+  const [notificationFilter, setNotificationFilter] = useState<'all' | 'social' | 'traffic' | 'sports'>('all');
   const [settings, setSettings] = useState({
     audioEnabled: true,
     frequency: '5min',
@@ -49,6 +52,26 @@ export const SocialPage = () => {
       setTimeout(() => setReadingAloud(null), 5000);
     }
   };
+
+  const handlePlayNotification = (id: string) => {
+    setPlayingNotification(id);
+    // Simulate audio playback
+    setTimeout(() => setPlayingNotification(null), 30000);
+  };
+
+  const handlePauseNotification = () => {
+    setPlayingNotification(null);
+  };
+
+  const handleSkipNotification = () => {
+    setPlayingNotification(null);
+    // Could auto-play next notification here
+  };
+
+  const filteredNotifications = mockNotifications.filter(notification => {
+    if (notificationFilter === 'all') return true;
+    return notification.type === notificationFilter;
+  });
 
   return (
     <div className="space-y-6">
@@ -219,42 +242,84 @@ export const SocialPage = () => {
       {/* Notifications Tab */}
       {activeTab === 'notifications' && (
         <div className="space-y-4">
-          <h2 className="text-car-subtitle flex items-center gap-2">
-            <Bell className="text-primary" />
-            Recent Notifications
-          </h2>
-          
-          {mockNotifications.map((notification) => (
-            <NeuroCard 
-              key={notification.id}
-              urgent={notification.urgent}
-              className="hover:scale-105 cursor-pointer"
-            >
-              <div className="flex justify-between items-start">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    {notification.type === 'traffic' && <span>🚦</span>}
-                    {notification.type === 'social' && <MessageSquare size={16} className="text-primary" />}
-                    {notification.type === 'sports' && <Trophy size={16} className="text-warning" />}
-                    <h3 className={`font-semibold ${notification.urgent ? 'text-destructive' : 'text-foreground'}`}>
-                      {notification.title}
-                    </h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-2">{notification.message}</p>
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <span>{notification.source}</span>
-                    <span>•</span>
-                    <span>{notification.time}</span>
+          <div className="flex justify-between items-center">
+            <h2 className="text-car-subtitle flex items-center gap-2">
+              <Bell className="text-primary" />
+              Smart Notifications
+            </h2>
+            {playingNotification && (
+              <div className="flex items-center gap-2 text-sm text-primary animate-pulse">
+                <div className="w-2 h-2 bg-primary rounded-full animate-bounce" />
+                <span>Playing audio...</span>
+              </div>
+            )}
+          </div>
+
+          {/* Notification Filters */}
+          <div className="flex gap-2 overflow-x-auto">
+            {[
+              { id: 'all', label: 'All', icon: '📱', count: mockNotifications.length },
+              { id: 'social', label: 'Social', icon: '💬', count: mockNotifications.filter(n => n.type === 'social').length },
+              { id: 'traffic', label: 'Traffic', icon: '🚦', count: mockNotifications.filter(n => n.type === 'traffic').length },
+              { id: 'sports', label: 'Sports', icon: '🏆', count: mockNotifications.filter(n => n.type === 'sports').length }
+            ].map((filter) => (
+              <button
+                key={filter.id}
+                onClick={() => setNotificationFilter(filter.id as any)}
+                className={`neuro-button px-4 py-2 flex items-center gap-2 whitespace-nowrap ${
+                  notificationFilter === filter.id ? 'neuro-button-primary' : ''
+                }`}
+              >
+                <span>{filter.icon}</span>
+                <span>{filter.label}</span>
+                <span className="bg-primary/20 text-primary px-2 py-1 rounded-full text-xs">
+                  {filter.count}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          {/* Enhanced Notification List */}
+          <div className="space-y-3">
+            {filteredNotifications.map((notification) => (
+              <SocialNotificationCard
+                key={notification.id}
+                notification={notification}
+                isPlaying={playingNotification === notification.id}
+                onPlay={handlePlayNotification}
+                onPause={handlePauseNotification}
+                onSkip={handleSkipNotification}
+              />
+            ))}
+          </div>
+
+          {/* Audio Control Panel */}
+          {playingNotification && (
+            <NeuroCard className="bg-gradient-to-r from-primary/20 to-info/20 border border-primary/30">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold text-primary">🎵 Audio Player</h3>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handlePauseNotification}
+                      className="neuro-button touch-target p-2"
+                    >
+                      <Pause size={16} />
+                    </button>
+                    <button
+                      onClick={handleSkipNotification}
+                      className="neuro-button touch-target p-2"
+                    >
+                      <SkipForward size={16} />
+                    </button>
                   </div>
                 </div>
-                {notification.urgent && (
-                  <div className="bg-destructive/20 border border-destructive rounded-lg p-1">
-                    <Bell size={14} className="text-destructive" />
-                  </div>
-                )}
+                <div className="text-sm text-muted-foreground">
+                  Auto-pausing music for smart notification playback
+                </div>
               </div>
             </NeuroCard>
-          ))}
+          )}
         </div>
       )}
 

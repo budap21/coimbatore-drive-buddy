@@ -52,8 +52,25 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				success: 'hsl(var(--success))',
-				warning: 'hsl(var(--warning))',
+				success: {
+					DEFAULT: 'hsl(var(--success))',
+					light: 'hsl(var(--success-light))'
+				},
+				warning: {
+					DEFAULT: 'hsl(var(--warning))',
+					light: 'hsl(var(--warning-light))'
+				},
+				info: {
+					DEFAULT: 'hsl(var(--info))',
+					light: 'hsl(var(--info-light))'
+				},
+				social: {
+					whatsapp: 'hsl(var(--whatsapp))',
+					instagram: 'hsl(var(--instagram))',
+					twitter: 'hsl(var(--twitter))',
+					facebook: 'hsl(var(--facebook))',
+					telegram: 'hsl(var(--telegram))'
+				},
 				neuro: {
 					dark: 'hsl(var(--neuro-dark))',
 					light: 'hsl(var(--neuro-light))',
