@@ -1,13 +1,32 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from 'react';
+import { CarLayout } from '@/components/layout/CarLayout';
+import { HomePage } from './HomePage';
+import { MusicPage } from './MusicPage';
+import { FoodPage } from './FoodPage';
+import { SocialPage } from './SocialPage';
 
 const Index = () => {
+  const [currentPage, setCurrentPage] = useState('home');
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'home':
+        return <HomePage />;
+      case 'music':
+        return <MusicPage />;
+      case 'food':
+        return <FoodPage />;
+      case 'social':
+        return <SocialPage />;
+      default:
+        return <HomePage />;
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <CarLayout currentPage={currentPage} onPageChange={setCurrentPage}>
+      {renderPage()}
+    </CarLayout>
   );
 };
 

@@ -1,96 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* DriverHub Design System - Neumorphic Car UI */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* DriverHub Dark Theme */
+    --background: 0 0% 8%;
+    --foreground: 0 0% 95%;
+    
+    /* Neon Blue Primary */
+    --primary: 194 100% 46%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 194 100% 60%;
+    
+    /* Neumorphic Colors */
+    --neuro-dark: 0 0% 6%;
+    --neuro-light: 0 0% 12%;
+    --neuro-border: 0 0% 15%;
+    
+    /* Card Colors */
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 95%;
+    
+    /* Secondary Colors */
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 90%;
+    
+    /* Accent Colors */
+    --accent: 194 100% 46%;
+    --accent-foreground: 0 0% 100%;
+    
+    /* Status Colors */
+    --success: 142 76% 36%;
+    --warning: 38 92% 50%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Muted Colors */
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
+    
+    /* Border and Input */
+    --border: 0 0% 20%;
+    --input: 0 0% 15%;
+    --ring: 194 100% 46%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-neuro: linear-gradient(145deg, hsl(var(--neuro-light)), hsl(var(--neuro-dark)));
+    
+    /* Shadows - Neumorphic */
+    --shadow-neuro-inset: inset 4px 4px 8px hsl(var(--neuro-dark)), inset -4px -4px 8px hsl(var(--neuro-light));
+    --shadow-neuro-raised: 4px 4px 8px hsl(var(--neuro-dark)), -4px -4px 8px hsl(var(--neuro-light));
+    --shadow-glow: 0 0 20px hsl(var(--primary) / 0.5);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    --radius: 12px;
   }
 }
 
@@ -100,6 +72,140 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+@layer components {
+  /* Neumorphic Card Components */
+  .neuro-card {
+    @apply bg-card rounded-xl;
+    background: var(--gradient-neuro);
+    box-shadow: var(--shadow-neuro-raised);
+    transition: var(--transition-smooth);
+  }
+  
+  .neuro-card-inset {
+    @apply bg-card rounded-xl;
+    background: var(--gradient-neuro);
+    box-shadow: var(--shadow-neuro-inset);
+    transition: var(--transition-smooth);
+  }
+  
+  .neuro-button {
+    @apply bg-card rounded-xl px-6 py-3 text-foreground font-medium;
+    background: var(--gradient-neuro);
+    box-shadow: var(--shadow-neuro-raised);
+    transition: var(--transition-bounce);
+  }
+  
+  .neuro-button:active {
+    box-shadow: var(--shadow-neuro-inset);
+    transform: scale(0.98);
+  }
+  
+  .neuro-button-primary {
+    @apply bg-primary text-primary-foreground rounded-xl px-6 py-3 font-medium;
+    background: var(--gradient-primary);
+    box-shadow: var(--shadow-neuro-raised), var(--shadow-glow);
+    transition: var(--transition-bounce);
+  }
+  
+  .neuro-button-primary:hover {
+    box-shadow: var(--shadow-neuro-raised), 0 0 30px hsl(var(--primary) / 0.6);
+    transform: translateY(-2px);
+  }
+  
+  .neuro-button-primary:active {
+    transform: scale(0.98);
+    box-shadow: var(--shadow-neuro-inset), var(--shadow-glow);
+  }
+  
+  /* Glow Effects */
+  .glow-primary {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  /* Pulse Animation for Urgent Alerts */
+  .pulse-urgent {
+    animation: pulseUrgent 1.5s ease-in-out infinite;
+  }
+  
+  /* Voice Command Indicator */
+  .voice-active {
+    animation: voicePulse 2s ease-in-out infinite;
+    box-shadow: 0 0 0 0 hsl(var(--primary));
+  }
+  
+  /* Car Screen Optimized Layout */
+  .car-screen {
+    max-width: 800px;
+    max-height: 480px;
+    @apply mx-auto;
+  }
+  
+  /* Large Touch Targets */
+  .touch-target {
+    min-width: 64px;
+    min-height: 64px;
+    @apply flex items-center justify-center;
+  }
+}
+
+@layer utilities {
+  /* Custom Keyframes */
+  @keyframes pulseUrgent {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 hsl(var(--destructive) / 0.7);
+    }
+    50% {
+      transform: scale(1.02);
+      box-shadow: 0 0 0 10px hsl(var(--destructive) / 0);
+    }
+  }
+  
+  @keyframes voicePulse {
+    0% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 hsl(var(--primary) / 0.7);
+    }
+    70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 15px hsl(var(--primary) / 0);
+    }
+    100% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 hsl(var(--primary) / 0);
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fade-in-up {
+    animation: fadeInUp 0.3s ease-out;
+  }
+  
+  /* Text sizes optimized for car screens */
+  .text-car-title {
+    @apply text-2xl md:text-3xl font-bold;
+  }
+  
+  .text-car-subtitle {
+    @apply text-lg md:text-xl font-medium;
+  }
+  
+  .text-car-body {
+    @apply text-base md:text-lg;
   }
 }
