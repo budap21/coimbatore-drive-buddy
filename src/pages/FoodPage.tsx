@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Search, Heart, Star, Clock, Truck, Leaf, CircleDot, MapPin, Filter } from 'lucide-react';
+import { Search, Heart, Star, Clock, Truck, Leaf, CircleDot, MapPin, Filter, List, Map } from 'lucide-react';
 import { NeuroCard } from '@/components/ui/NeuroCard';
 import { VoiceButton } from '@/components/ui/VoiceButton';
 import { mockRestaurants } from '@/data/mockData';
 
 export const FoodPage = () => {
   const [activeTab, setActiveTab] = useState<'restaurants' | 'favorites' | 'orders'>('restaurants');
+  const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRestaurant, setSelectedRestaurant] = useState<string | null>(null);
   const [favorites, setFavorites] = useState<string[]>(['1']);
@@ -125,25 +126,43 @@ export const FoodPage = () => {
             </div>
           </NeuroCard>
 
-          {/* Sort Options */}
-          <div className="flex items-center gap-2 overflow-x-auto">
-            <Filter size={16} className="text-muted-foreground flex-shrink-0" />
-            {[
-              { id: 'distance', label: 'Nearest', icon: '📍' },
-              { id: 'rating', label: 'Top Rated', icon: '⭐' },
-              { id: 'delivery', label: 'Fastest', icon: '🚀' }
-            ].map((option) => (
+          {/* Sort and View Options */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 overflow-x-auto">
+              <Filter size={16} className="text-muted-foreground flex-shrink-0" />
+              {[
+                { id: 'distance', label: 'Nearest', icon: '📍' },
+                { id: 'rating', label: 'Top Rated', icon: '⭐' },
+                { id: 'delivery', label: 'Fastest', icon: '🚀' }
+              ].map((option) => (
+                <button
+                  key={option.id}
+                  onClick={() => setSortBy(option.id as any)}
+                  className={`neuro-button px-3 py-2 flex items-center gap-2 whitespace-nowrap text-sm ${
+                    sortBy === option.id ? 'neuro-button-primary' : ''
+                  }`}
+                >
+                  <span>{option.icon}</span>
+                  {option.label}
+                </button>
+              ))}
+            </div>
+            
+            {/* View Toggle */}
+            <div className="flex items-center gap-1 bg-muted/20 rounded-lg p-1">
               <button
-                key={option.id}
-                onClick={() => setSortBy(option.id as any)}
-                className={`neuro-button px-3 py-2 flex items-center gap-2 whitespace-nowrap text-sm ${
-                  sortBy === option.id ? 'neuro-button-primary' : ''
-                }`}
+                onClick={() => setViewMode('list')}
+                className={`p-2 rounded ${viewMode === 'list' ? 'neuro-button-primary' : 'neuro-button'}`}
               >
-                <span>{option.icon}</span>
-                {option.label}
+                <List size={16} />
               </button>
-            ))}
+              <button
+                onClick={() => setViewMode('map')}
+                className={`p-2 rounded ${viewMode === 'map' ? 'neuro-button-primary' : 'neuro-button'}`}
+              >
+                <Map size={16} />
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -198,8 +217,30 @@ export const FoodPage = () => {
         </div>
       </NeuroCard>
 
-      {/* Restaurant List or Details */}
-      {!selectedRestaurant ? (
+      {/* Restaurant List or Map View */}
+      {viewMode === 'map' ? (
+        <NeuroCard className="h-96">
+          <div className="w-full h-full bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg flex items-center justify-center relative">
+            <div className="text-center space-y-2">
+              <MapPin size={48} className="text-primary mx-auto" />
+              <h3 className="font-semibold text-primary">Restaurant Map View</h3>
+              <p className="text-sm text-muted-foreground">Interactive map with restaurant locations</p>
+            </div>
+            
+            {/* Mock restaurant pins */}
+            <div className="absolute top-1/4 left-1/3 w-6 h-6 bg-destructive rounded-full flex items-center justify-center text-white text-xs font-bold animate-pulse">
+              A2B
+            </div>
+            <div className="absolute top-3/4 right-1/3 w-6 h-6 bg-success rounded-full flex items-center justify-center text-white text-xs font-bold animate-pulse">
+              JK
+            </div>
+            <div className="absolute bottom-1/4 left-1/4 w-6 h-6 bg-warning rounded-full flex items-center justify-center text-white text-xs font-bold animate-pulse">
+              AK
+            </div>
+          </div>
+        </NeuroCard>
+      ) : (
+        !selectedRestaurant ? (
         <div className="space-y-4">
           {filteredRestaurants.map((restaurant) => (
             <NeuroCard key={restaurant.id} className="hover:scale-105 cursor-pointer">
@@ -277,78 +318,79 @@ export const FoodPage = () => {
             </NeuroCard>
           ))}
         </div>
-      ) : (
-        // Restaurant Details View
-        <div className="space-y-4">
-          <button
-            onClick={() => setSelectedRestaurant(null)}
-            className="neuro-button px-4 py-2"
-          >
-            ← Back to Restaurants
-          </button>
-          
-          {mockRestaurants
-            .filter(r => r.id === selectedRestaurant)
-            .map((restaurant) => (
-              <div key={restaurant.id} className="space-y-4">
-                {/* Restaurant Info */}
-                <NeuroCard>
-                  <div className="space-y-3">
-                    <h2 className="text-car-subtitle">{restaurant.name}</h2>
-                    <div className="flex items-center gap-4 text-sm">
-                      <div className="flex items-center gap-1">
-                        <Star size={14} className="text-warning fill-warning" />
-                        <span>{restaurant.rating}</span>
+        ) : (
+          // Restaurant Details View
+          <div className="space-y-4">
+            <button
+              onClick={() => setSelectedRestaurant(null)}
+              className="neuro-button px-4 py-2"
+            >
+              ← Back to Restaurants
+            </button>
+            
+            {mockRestaurants
+              .filter(r => r.id === selectedRestaurant)
+              .map((restaurant) => (
+                <div key={restaurant.id} className="space-y-4">
+                  {/* Restaurant Info */}
+                  <NeuroCard>
+                    <div className="space-y-3">
+                      <h2 className="text-car-subtitle">{restaurant.name}</h2>
+                      <div className="flex items-center gap-4 text-sm">
+                        <div className="flex items-center gap-1">
+                          <Star size={14} className="text-warning fill-warning" />
+                          <span>{restaurant.rating}</span>
+                        </div>
+                        <span>{restaurant.cuisine}</span>
+                        <span>{restaurant.deliveryTime}</span>
                       </div>
-                      <span>{restaurant.cuisine}</span>
-                      <span>{restaurant.deliveryTime}</span>
+                      {restaurant.deals && (
+                        <div className="bg-success/10 border border-success/30 rounded-lg p-2">
+                          <p className="text-sm text-success">🎯 {restaurant.deals}</p>
+                        </div>
+                      )}
                     </div>
-                    {restaurant.deals && (
-                      <div className="bg-success/10 border border-success/30 rounded-lg p-2">
-                        <p className="text-sm text-success">🎯 {restaurant.deals}</p>
-                      </div>
-                    )}
-                  </div>
-                </NeuroCard>
+                  </NeuroCard>
 
-                {/* Menu Items */}
-                <div className="space-y-3">
-                  <h3 className="text-car-subtitle">Menu</h3>
-                  {restaurant.items.map((item) => (
-                    <NeuroCard key={item.id}>
-                      <div className="flex justify-between items-center">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            {item.veg ? (
-                              <CircleDot size={16} className="text-success" />
-                            ) : (
-                              <CircleDot size={16} className="text-destructive" />
-                            )}
-                            {item.jain && <Leaf size={16} className="text-success" />}
-                            <h4 className="font-semibold">{item.name}</h4>
+                  {/* Menu Items */}
+                  <div className="space-y-3">
+                    <h3 className="text-car-subtitle">Menu</h3>
+                    {restaurant.items.map((item) => (
+                      <NeuroCard key={item.id}>
+                        <div className="flex justify-between items-center">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              {item.veg ? (
+                                <CircleDot size={16} className="text-success" />
+                              ) : (
+                                <CircleDot size={16} className="text-destructive" />
+                              )}
+                              {item.jain && <Leaf size={16} className="text-success" />}
+                              <h4 className="font-semibold">{item.name}</h4>
+                            </div>
+                            <p className="text-car-body text-primary">₹{item.price}</p>
                           </div>
-                          <p className="text-car-body text-primary">₹{item.price}</p>
+                          <div className="flex items-center gap-2">
+                            {cart[item.id] && (
+                              <span className="neuro-card-inset px-2 py-1 text-sm">
+                                {cart[item.id]}
+                              </span>
+                            )}
+                            <button
+                              onClick={() => addToCart(item.id)}
+                              className="neuro-button-primary px-4 py-2"
+                            >
+                              Add +
+                            </button>
+                          </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                          {cart[item.id] && (
-                            <span className="neuro-card-inset px-2 py-1 text-sm">
-                              {cart[item.id]}
-                            </span>
-                          )}
-                          <button
-                            onClick={() => addToCart(item.id)}
-                            className="neuro-button-primary px-4 py-2"
-                          >
-                            Add +
-                          </button>
-                        </div>
-                      </div>
-                    </NeuroCard>
-                  ))}
+                      </NeuroCard>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
-        </div>
+              ))}
+          </div>
+        )
       )}
 
       {/* Favorites Tab */}

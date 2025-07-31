@@ -23,8 +23,9 @@ export const HomePage = () => {
     return 'night';
   };
 
+  const [dismissedAlerts, setDismissedAlerts] = useState<string[]>([]);
   const suggestions = getAISuggestions(getTimeOfDay());
-  const urgentNotifications = mockNotifications.filter(n => n.urgent);
+  const urgentNotifications = mockNotifications.filter(n => n.urgent && !dismissedAlerts.includes(n.id));
 
   const handleVoiceCommand = (command: string) => {
     console.log('Voice command received:', command);
@@ -34,6 +35,10 @@ export const HomePage = () => {
     } else if (command.toLowerCase().includes('pause')) {
       setIsPlaying(false);
     }
+  };
+
+  const dismissAlert = (alertId: string) => {
+    setDismissedAlerts(prev => [...prev, alertId]);
   };
 
   return (
@@ -56,9 +61,6 @@ export const HomePage = () => {
         <VoiceButton onCommand={handleVoiceCommand} />
       </div>
 
-      {/* Driver Points */}
-      <DriverPoints points={mockDriverProfile.points} level={mockDriverProfile.level} />
-
       {/* Urgent Notifications */}
       {urgentNotifications.length > 0 && (
         <div className="space-y-2">
@@ -69,11 +71,17 @@ export const HomePage = () => {
           {urgentNotifications.map((notification) => (
             <NeuroCard key={notification.id} urgent className="border-destructive">
               <div className="flex justify-between items-start">
-                <div>
+                <div className="flex-1">
                   <h3 className="font-semibold text-destructive">{notification.title}</h3>
                   <p className="text-sm mt-1">{notification.message}</p>
                   <p className="text-xs text-muted-foreground mt-2">{notification.time}</p>
                 </div>
+                <button
+                  onClick={() => dismissAlert(notification.id)}
+                  className="neuro-button p-2 ml-2"
+                >
+                  ✕
+                </button>
               </div>
             </NeuroCard>
           ))}
@@ -94,6 +102,25 @@ export const HomePage = () => {
           >
             {isPlaying ? <Pause size={24} /> : <Play size={24} />}
           </button>
+        </div>
+      </NeuroCard>
+
+      {/* Quick Map View */}
+      <NeuroCard>
+        <div className="space-y-3">
+          <h3 className="font-semibold text-accent flex items-center gap-2">
+            <MapPin size={20} />
+            Quick Navigation
+          </h3>
+          <div className="w-full h-48 bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg flex items-center justify-center">
+            <div className="text-center space-y-2">
+              <MapPin size={32} className="text-primary mx-auto" />
+              <p className="text-sm text-muted-foreground">Interactive Map View</p>
+              <button className="neuro-button-primary px-4 py-2">
+                Open Full Map
+              </button>
+            </div>
+          </div>
         </div>
       </NeuroCard>
 

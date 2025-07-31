@@ -105,18 +105,34 @@ export const SettingsPage = () => {
 
   return (
     <div className="space-y-6">
-      {/* User Profile */}
+      {/* User Profile with Driver Points */}
       <NeuroCard className="bg-gradient-to-r from-primary/20 to-accent/20 border-primary/30">
-        <div className="flex items-center gap-4">
-          <div className="p-3 rounded-full bg-primary/20">
-            <User className="text-primary" size={24} />
+        <div className="space-y-4">
+          <div className="flex items-center gap-4">
+            <div className="p-3 rounded-full bg-primary/20">
+              <User className="text-primary" size={24} />
+            </div>
+            <div className="flex-1">
+              <h2 className="text-lg font-semibold text-primary">{profileSection.name}</h2>
+              <p className="text-car-body">{profileSection.phone}</p>
+              <div className="flex items-center gap-4 mt-2">
+                <span className="text-sm text-accent">{profileSection.level}</span>
+                <span className="text-sm text-warning">{profileSection.points} points</span>
+              </div>
+            </div>
           </div>
-          <div className="flex-1">
-            <h2 className="text-lg font-semibold text-primary">{profileSection.name}</h2>
-            <p className="text-car-body">{profileSection.phone}</p>
-            <div className="flex items-center gap-4 mt-2">
-              <span className="text-sm text-accent">{profileSection.level}</span>
-              <span className="text-sm text-warning">{profileSection.points} points</span>
+          
+          {/* Driver Points Progress */}
+          <div className="space-y-2">
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Progress to Gold</span>
+              <span className="text-warning">{profileSection.points}/2000</span>
+            </div>
+            <div className="w-full bg-muted/30 rounded-full h-2">
+              <div 
+                className="bg-gradient-to-r from-warning to-success h-2 rounded-full transition-all duration-300"
+                style={{ width: `${(profileSection.points / 2000) * 100}%` }}
+              />
             </div>
           </div>
         </div>
