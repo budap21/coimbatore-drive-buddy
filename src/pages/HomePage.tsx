@@ -136,19 +136,24 @@ export const HomePage = () => {
         </NeuroCard>
       </div>
 
-      {/* Sponsored Deal */}
-      <NeuroCard className="bg-gradient-to-r from-success/20 to-warning/20 border border-success/30">
-        <div className="flex justify-between items-center">
-          <div>
-            <h3 className="font-semibold text-success">🎯 Sponsored Deal</h3>
-            <p className="text-car-body">Swiggy: 20% off at A2B</p>
-            <p className="text-sm text-muted-foreground">Valid till midnight | Use code: DRIVER20</p>
+      {/* Quick Actions */}
+      <div className="grid grid-cols-2 gap-4">
+        <NeuroCard className="hover:scale-105 cursor-pointer bg-gradient-to-r from-accent/20 to-primary/20 border-accent/30">
+          <div className="text-center space-y-2">
+            <MapPin className="text-accent mx-auto" size={24} />
+            <h3 className="font-semibold text-accent">Quick Navigate</h3>
+            <p className="text-sm text-muted-foreground">Find nearby places</p>
           </div>
-          <button className="neuro-button-primary px-4 py-2">
-            Order Now
-          </button>
-        </div>
-      </NeuroCard>
+        </NeuroCard>
+        
+        <NeuroCard className="hover:scale-105 cursor-pointer bg-gradient-to-r from-warning/20 to-success/20 border-warning/30">
+          <div className="text-center space-y-2">
+            <Zap className="text-warning mx-auto" size={24} />
+            <h3 className="font-semibold text-warning">Voice Command</h3>
+            <p className="text-sm text-muted-foreground">Say "Navigate to..."</p>
+          </div>
+        </NeuroCard>
+      </div>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Home, Music, UtensilsCrossed, Users } from 'lucide-react';
+import { Home, Music, UtensilsCrossed, Users, MapPin, Settings } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface CarLayoutProps {
@@ -13,6 +13,8 @@ const navigationItems = [
   { id: 'music', label: 'Music', icon: Music },
   { id: 'food', label: 'Food', icon: UtensilsCrossed },
   { id: 'social', label: 'Social', icon: Users },
+  { id: 'maps', label: 'Maps', icon: MapPin },
+  { id: 'settings', label: 'Settings', icon: Settings },
 ];
 
 export const CarLayout = ({ children, currentPage, onPageChange }: CarLayoutProps) => {

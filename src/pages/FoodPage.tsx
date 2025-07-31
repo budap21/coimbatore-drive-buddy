@@ -148,6 +148,38 @@ export const FoodPage = () => {
         </div>
       )}
 
+      {/* Sponsored Deals */}
+      <div className="space-y-4">
+        <h2 className="text-car-subtitle">🎯 Special Offers</h2>
+        <div className="space-y-3">
+          <NeuroCard className="bg-gradient-to-r from-success/20 to-warning/20 border-success/30">
+            <div className="flex justify-between items-center">
+              <div>
+                <h3 className="font-semibold text-success">Swiggy Partnership</h3>
+                <p className="text-car-body">20% off at A2B Restaurant</p>
+                <p className="text-sm text-muted-foreground">Valid till midnight | Use code: DRIVER20</p>
+              </div>
+              <button className="neuro-button-primary px-4 py-2">
+                Order Now
+              </button>
+            </div>
+          </NeuroCard>
+          
+          <NeuroCard className="bg-gradient-to-r from-warning/20 to-accent/20 border-warning/30">
+            <div className="flex justify-between items-center">
+              <div>
+                <h3 className="font-semibold text-warning">Junior Kuppanna</h3>
+                <p className="text-car-body">Free drink with any biryani order</p>
+                <p className="text-sm text-muted-foreground">Only for drivers | Show your license</p>
+              </div>
+              <button className="neuro-button px-4 py-2">
+                Claim Deal
+              </button>
+            </div>
+          </NeuroCard>
+        </div>
+      </div>
+
       {/* AI Food Suggestion */}
       <NeuroCard className="bg-gradient-to-r from-warning/20 to-primary/20 border border-warning/30">
         <div className="space-y-2">
