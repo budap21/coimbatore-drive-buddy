@@ -1,79 +1,96 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* DriverHub Design System - Neumorphic Car UI */
+/* DriverHub Design System - Enhanced with Animations */
 
 @layer base {
   :root {
-    /* DriverHub Dark Theme */
-    --background: 0 0% 8%;
-    --foreground: 0 0% 95%;
+    /* Enhanced Dark Theme */
+    --background: 220 15% 6%;
+    --foreground: 220 8% 95%;
     
-    /* Neon Blue Primary */
-    --primary: 194 100% 46%;
-    --primary-foreground: 0 0% 100%;
-    --primary-glow: 194 100% 60%;
+    /* Enhanced Primary Colors */
+    --primary: 220 91% 60%;
+    --primary-foreground: 220 15% 6%;
+    --primary-glow: 220 91% 70%;
     
     /* Neumorphic Colors */
-    --neuro-dark: 0 0% 6%;
-    --neuro-light: 0 0% 12%;
-    --neuro-border: 0 0% 15%;
+    --neuro-dark: 220 15% 4%;
+    --neuro-light: 220 13% 12%;
+    --neuro-border: 220 13% 20%;
     
     /* Card Colors */
-    --card: 0 0% 10%;
-    --card-foreground: 0 0% 95%;
+    --card: 220 13% 9%;
+    --card-foreground: 220 8% 95%;
     
-    /* Secondary Colors */
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 90%;
-    
-    /* Accent Colors */
-    --accent: 194 100% 46%;
-    --accent-foreground: 0 0% 100%;
+    /* Secondary & Accent Colors */
+    --secondary: 220 13% 15%;
+    --secondary-foreground: 220 8% 95%;
+    --accent: 280 91% 60%;
+    --accent-foreground: 220 15% 6%;
     
     /* Enhanced Status Colors */
-    --success: 142 76% 36%;
-    --success-light: 142 60% 55%;
-    --warning: 38 92% 50%;
-    --warning-light: 38 85% 65%;
+    --success: 120 84% 60%;
+    --success-foreground: 220 15% 6%;
+    --warning: 45 100% 60%;
+    --warning-foreground: 220 15% 6%;
     --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --info: 214 100% 60%;
-    --info-light: 214 80% 75%;
-    
-    /* Social Media Brand Colors */
-    --whatsapp: 142 70% 49%;
-    --instagram: 316 73% 52%;
-    --twitter: 203 89% 53%;
-    --facebook: 221 44% 41%;
-    --telegram: 200 100% 48%;
+    --destructive-foreground: 220 15% 6%;
+    --info: 200 91% 60%;
+    --info-foreground: 220 15% 6%;
     
     /* Muted Colors */
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 220 13% 15%;
+    --muted-foreground: 220 8% 70%;
     
     /* Border and Input */
-    --border: 0 0% 20%;
-    --input: 0 0% 15%;
-    --ring: 194 100% 46%;
+    --border: 220 13% 20%;
+    --input: 220 13% 20%;
+    --ring: 220 91% 60%;
     
-    /* Gradients */
+    /* Enhanced Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--primary)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--background)), hsl(var(--card)));
     --gradient-neuro: linear-gradient(145deg, hsl(var(--neuro-light)), hsl(var(--neuro-dark)));
     
-    /* Shadows - Neumorphic */
-    --shadow-neuro-inset: inset 4px 4px 8px hsl(var(--neuro-dark)), inset -4px -4px 8px hsl(var(--neuro-light));
-    --shadow-neuro-raised: 4px 4px 8px hsl(var(--neuro-dark)), -4px -4px 8px hsl(var(--neuro-light));
-    --shadow-glow: 0 0 20px hsl(var(--primary) / 0.5);
+    /* Enhanced Shadows */
+    --shadow-neuro-raised: 8px 8px 16px hsl(var(--neuro-dark)), -8px -8px 16px hsl(var(--neuro-light));
+    --shadow-neuro-inset: inset 8px 8px 16px hsl(var(--neuro-dark)), inset -8px -8px 16px hsl(var(--neuro-light));
+    --shadow-glow: 0 0 50px hsl(var(--primary) / 0.3);
+    --shadow-soft: 0 4px 20px hsl(var(--background) / 0.5);
     
-    /* Animations */
+    /* Enhanced Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-elegant: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     
-    --radius: 12px;
+    --radius: 0.75rem;
+  }
+
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-glow: 221.2 83.2% 63.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 280 83.2% 53.3%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --shadow-neuro-raised: 8px 8px 16px rgba(0,0,0,0.1), -8px -8px 16px rgba(255,255,255,0.8);
   }
 }
 
@@ -81,91 +98,163 @@
   * {
     @apply border-border;
   }
-
+  
   body {
-    @apply bg-background text-foreground font-sans;
-    font-family: 'Poppins', sans-serif;
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
   }
 }
 
 @layer components {
-  /* Neumorphic Card Components */
-  .neuro-card {
-    @apply bg-card rounded-xl;
-    background: var(--gradient-neuro);
-    box-shadow: var(--shadow-neuro-raised);
-    transition: var(--transition-smooth);
+  /* Login Page Animations */
+  .login-container {
+    animation: fadeInUp 0.6s ease-out;
   }
   
-  .neuro-card-inset {
-    @apply bg-card rounded-xl;
+  .login-graphics {
+    animation: scaleInBounce 0.8s ease-out 0.2s both;
+  }
+  
+  .login-form {
+    animation: fadeInUp 0.6s ease-out 0.4s both;
+  }
+
+  /* Enhanced Neumorphic Components */
+  .neuro-card {
+    @apply bg-card/50 backdrop-blur-sm border border-border/50 rounded-[var(--radius)] p-6;
     background: var(--gradient-neuro);
-    box-shadow: var(--shadow-neuro-inset);
-    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-neuro-raised);
+    transition: var(--transition-elegant);
+  }
+  
+  .neuro-card:hover {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: var(--shadow-neuro-raised), var(--shadow-glow);
   }
   
   .neuro-button {
-    @apply bg-card rounded-xl px-6 py-3 text-foreground font-medium;
+    @apply bg-secondary/80 backdrop-blur-sm border border-border/50 rounded-[calc(var(--radius)-4px)] px-4 py-2 font-medium;
     background: var(--gradient-neuro);
     box-shadow: var(--shadow-neuro-raised);
     transition: var(--transition-bounce);
   }
   
+  .neuro-button:hover {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: var(--shadow-neuro-raised), var(--shadow-soft);
+  }
+  
   .neuro-button:active {
-    box-shadow: var(--shadow-neuro-inset);
     transform: scale(0.98);
+    box-shadow: var(--shadow-neuro-inset);
   }
   
   .neuro-button-primary {
-    @apply bg-primary text-primary-foreground rounded-xl px-6 py-3 font-medium;
+    @apply text-primary-foreground border-primary/50 font-medium;
     background: var(--gradient-primary);
-    box-shadow: var(--shadow-neuro-raised), var(--shadow-glow);
+    box-shadow: var(--shadow-glow), var(--shadow-neuro-raised);
     transition: var(--transition-bounce);
   }
   
   .neuro-button-primary:hover {
-    box-shadow: var(--shadow-neuro-raised), 0 0 30px hsl(var(--primary) / 0.6);
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 0 60px hsl(var(--primary) / 0.4), var(--shadow-neuro-raised);
   }
   
   .neuro-button-primary:active {
     transform: scale(0.98);
     box-shadow: var(--shadow-neuro-inset), var(--shadow-glow);
   }
+
+  /* Gradient Backgrounds */
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
   
-  /* Glow Effects */
-  .glow-primary {
+  .gradient-accent {
+    background: var(--gradient-accent);
+  }
+
+  /* Enhanced Typography */
+  .text-car-title {
+    @apply text-2xl font-bold tracking-tight;
+  }
+  
+  .text-car-subtitle {
+    @apply text-lg font-semibold;
+  }
+  
+  .text-car-body {
+    @apply text-base font-medium;
+  }
+
+  /* Interactive Effects */
+  .hover-glow:hover {
     box-shadow: var(--shadow-glow);
   }
   
-  /* Pulse Animation for Urgent Alerts */
+  .hover-lift:hover {
+    transform: translateY(-2px);
+  }
+  
+  .hover-scale:hover {
+    transform: scale(1.02);
+  }
+
+  /* Touch Targets */
+  .touch-target {
+    @apply min-w-[44px] min-h-[44px] flex items-center justify-center;
+  }
+
+  /* Compact Layout Classes */
+  .compact-spacing {
+    @apply space-y-3;
+  }
+  
+  .compact-card {
+    @apply p-3;
+  }
+
+  /* Pulse Effects */
   .pulse-urgent {
     animation: pulseUrgent 1.5s ease-in-out infinite;
   }
   
-  /* Voice Command Indicator */
   .voice-active {
     animation: voicePulse 2s ease-in-out infinite;
-    box-shadow: 0 0 0 0 hsl(var(--primary));
-  }
-  
-  /* Car Screen Optimized Layout */
-  .car-screen {
-    max-width: 800px;
-    max-height: 480px;
-    @apply mx-auto;
-  }
-  
-  /* Large Touch Targets */
-  .touch-target {
-    min-width: 64px;
-    min-height: 64px;
-    @apply flex items-center justify-center;
   }
 }
 
 @layer utilities {
-  /* Custom Keyframes */
+  /* Enhanced Keyframes */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes scaleInBounce {
+    0% {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    70% {
+      transform: scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
   @keyframes pulseUrgent {
     0%, 100% {
       transform: scale(1);
@@ -192,31 +281,38 @@
     }
   }
   
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
+  @keyframes glow {
+    0%, 100% { 
+      box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
     }
-    to {
-      opacity: 1;
-      transform: translateY(0);
+    50% { 
+      box-shadow: 0 0 40px hsl(var(--primary) / 0.6), 0 0 60px hsl(var(--primary) / 0.4);
     }
   }
   
+  @keyframes float {
+    0%, 100% { 
+      transform: translateY(0px);
+    }
+    50% { 
+      transform: translateY(-10px);
+    }
+  }
+  
+  /* Animation Classes */
   .animate-fade-in-up {
-    animation: fadeInUp 0.3s ease-out;
+    animation: fadeInUp 0.6s ease-out;
   }
   
-  /* Text sizes optimized for car screens */
-  .text-car-title {
-    @apply text-2xl md:text-3xl font-bold;
+  .animate-scale-in-bounce {
+    animation: scaleInBounce 0.8s ease-out;
   }
   
-  .text-car-subtitle {
-    @apply text-lg md:text-xl font-medium;
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite;
   }
   
-  .text-car-body {
-    @apply text-base md:text-lg;
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
   }
 }

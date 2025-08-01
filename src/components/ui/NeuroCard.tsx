@@ -1,30 +1,28 @@
+import React from 'react';
 import { cn } from '@/lib/utils';
-import { ReactNode } from 'react';
 
 interface NeuroCardProps {
-  children: ReactNode;
+  children: React.ReactNode;
   className?: string;
-  variant?: 'raised' | 'inset';
-  onClick?: () => void;
   urgent?: boolean;
+  onClick?: () => void;
+  variant?: 'raised' | 'inset';
 }
 
-export const NeuroCard = ({ 
+export const NeuroCard: React.FC<NeuroCardProps> = ({ 
   children, 
   className, 
-  variant = 'raised',
+  urgent = false,
   onClick,
-  urgent = false
-}: NeuroCardProps) => {
-  const cardClass = variant === 'raised' ? 'neuro-card' : 'neuro-card-inset';
-  
+  variant = 'raised'
+}) => {
   return (
     <div
       className={cn(
-        cardClass,
-        "p-4 animate-fade-in-up",
-        urgent && "pulse-urgent border-2 border-destructive",
-        onClick && "cursor-pointer hover:scale-105 transition-transform",
+        "neuro-card transition-all duration-300 animate-fade-in",
+        variant === 'inset' && "neuro-card-inset",
+        urgent && "border-destructive/50 bg-destructive/5 animate-pulse pulse-urgent",
+        onClick && "cursor-pointer hover:scale-[1.02] hover-lift",
         className
       )}
       onClick={onClick}
