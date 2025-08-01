@@ -262,7 +262,7 @@ export const getAISuggestions = (timeOfDay: 'morning' | 'afternoon' | 'evening' 
 };
 
 export const mockDriverProfile = {
-  name: 'Raj Kumar',
+  name: 'Test User 1',
   points: 1250,
   level: 'Elite',
   achievements: ['Safe Driver', 'Music Lover', 'Foodie Explorer'],

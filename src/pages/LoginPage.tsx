@@ -31,7 +31,7 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
       setLoading(true);
       setTimeout(() => {
         onLogin({
-          name: 'Test User',
+          name: 'Test User 1',
           phone: phoneNumber
         });
       }, 1000);
@@ -41,7 +41,14 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-6">
-        <div className="text-center">
+        {/* Graphics */}
+        <div className="text-center space-y-4">
+          <div className="relative mx-auto w-24 h-24 bg-gradient-to-br from-primary to-primary-glow rounded-full flex items-center justify-center">
+            <div className="text-3xl">🚗</div>
+            <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-warning to-success rounded-full flex items-center justify-center text-lg">
+              🔑
+            </div>
+          </div>
           <h1 className="text-car-title text-primary mb-2">Welcome to DriverHub</h1>
           <p className="text-muted-foreground">Login with your phone number</p>
         </div>

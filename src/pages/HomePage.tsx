@@ -45,8 +45,16 @@ export const HomePage = () => {
     <div className="space-y-6">
       {/* Header with Time and Driver Info */}
       <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-car-title">Good {getTimeOfDay()}, {mockDriverProfile.name}!</h1>
+        <div className="flex items-center gap-4">
+          {/* Weather/Time Graphics */}
+          <div className="text-2xl">
+            {getTimeOfDay() === 'morning' && '🌅'}
+            {getTimeOfDay() === 'afternoon' && '☀️'}
+            {getTimeOfDay() === 'evening' && '🌆'}
+            {getTimeOfDay() === 'night' && '🌙'}
+          </div>
+          <div>
+            <h1 className="text-car-title">Good {getTimeOfDay()}, Test User 1!</h1>
           <p className="text-muted-foreground flex items-center gap-2">
             <Clock size={16} />
             {currentTime.toLocaleTimeString('en-IN', { 
@@ -57,6 +65,7 @@ export const HomePage = () => {
             <MapPin size={16} className="ml-4" />
             Coimbatore, TN
           </p>
+          </div>
         </div>
         <VoiceButton onCommand={handleVoiceCommand} />
       </div>
@@ -112,12 +121,34 @@ export const HomePage = () => {
             <MapPin size={20} />
             Quick Navigation
           </h3>
-          <div className="w-full h-48 bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg flex items-center justify-center">
-            <div className="text-center space-y-2">
-              <MapPin size={32} className="text-primary mx-auto" />
-              <p className="text-sm text-muted-foreground">Interactive Map View</p>
-              <button className="neuro-button-primary px-4 py-2">
-                Open Full Map
+          <div className="w-full h-48 bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg relative overflow-hidden">
+            {/* Mock Coimbatore Map */}
+            <div className="absolute inset-0 bg-green-100/30">
+              {/* Road lines */}
+              <div className="absolute top-1/3 left-0 right-0 h-1 bg-gray-400/50"></div>
+              <div className="absolute top-2/3 left-0 right-0 h-1 bg-gray-400/50"></div>
+              <div className="absolute left-1/3 top-0 bottom-0 w-1 bg-gray-400/50"></div>
+              <div className="absolute left-2/3 top-0 bottom-0 w-1 bg-gray-400/50"></div>
+              
+              {/* Location pin for Coimbatore */}
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <div className="w-6 h-6 bg-destructive rounded-full flex items-center justify-center text-white text-xs animate-pulse">
+                  📍
+                </div>
+                <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs bg-white px-2 py-1 rounded shadow">
+                  Coimbatore
+                </div>
+              </div>
+              
+              {/* Some buildings/landmarks */}
+              <div className="absolute top-1/4 left-1/4 w-3 h-3 bg-blue-400/60 rounded"></div>
+              <div className="absolute top-3/4 left-3/4 w-3 h-3 bg-yellow-400/60 rounded"></div>
+              <div className="absolute top-1/2 left-1/4 w-2 h-2 bg-green-400/60 rounded-full"></div>
+            </div>
+            
+            <div className="absolute bottom-2 right-2">
+              <button className="neuro-button-primary px-3 py-1 text-sm">
+                📍 Navigate
               </button>
             </div>
           </div>

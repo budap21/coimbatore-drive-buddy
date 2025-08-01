@@ -105,6 +105,53 @@ export const SocialPage = () => {
         })}
       </div>
 
+      {/* Social Media Updates */}
+      {activeTab === 'news' && (
+        <div className="space-y-4">
+          <NeuroCard className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 border-blue-500/30">
+            <div className="space-y-3">
+              <h3 className="font-semibold text-blue-400 flex items-center gap-2">
+                📘 Facebook Update
+              </h3>
+              <p className="text-sm">Your friend Raj shared a video about traffic updates in Coimbatore</p>
+              <div className="flex gap-2">
+                <button className="neuro-button px-3 py-1 text-xs">👍 Like</button>
+                <button className="neuro-button px-3 py-1 text-xs">💬 Comment</button>
+                <button className="neuro-button px-3 py-1 text-xs">📤 Share</button>
+              </div>
+            </div>
+          </NeuroCard>
+
+          <NeuroCard className="bg-gradient-to-r from-pink-500/20 to-purple-600/20 border-pink-500/30">
+            <div className="space-y-3">
+              <h3 className="font-semibold text-pink-400 flex items-center gap-2">
+                📷 Instagram Story
+              </h3>
+              <p className="text-sm">@coimbatore_food posted a new reel about best breakfast spots</p>
+              <div className="flex gap-2">
+                <button className="neuro-button px-3 py-1 text-xs">❤️ Love</button>
+                <button className="neuro-button px-3 py-1 text-xs">📩 Message</button>
+                <button className="neuro-button px-3 py-1 text-xs">📋 Save</button>
+              </div>
+            </div>
+          </NeuroCard>
+
+          <NeuroCard className="bg-gradient-to-r from-blue-400/20 to-blue-600/20 border-blue-400/30">
+            <div className="space-y-3">
+              <h3 className="font-semibold text-blue-400 flex items-center gap-2">
+                🐦 Twitter/X Update
+              </h3>
+              <p className="text-sm">@CoimbatoreTraffic: "Heavy traffic on Avinashi Road. Use alternate routes."</p>
+              <div className="flex gap-2">
+                <button className="neuro-button px-3 py-1 text-xs">🔄 Retweet</button>
+                <button className="neuro-button px-3 py-1 text-xs">❤️ Like</button>
+                <button className="neuro-button px-3 py-1 text-xs">💬 Reply</button>
+              </div>
+            </div>
+          </NeuroCard>
+        </div>
+      )}
+
       {/* News Tab */}
       {activeTab === 'news' && (
         <div className="space-y-4">
