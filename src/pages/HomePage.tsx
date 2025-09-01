@@ -1,9 +1,23 @@
 import { useState, useEffect } from 'react';
-import { Play, Pause, MapPin, Clock, Zap } from 'lucide-react';
+import { Play, Pause, MapPin, Clock, Zap, AlertTriangle, Fuel, Route, Calendar } from 'lucide-react';
 import { NeuroCard } from '@/components/ui/NeuroCard';
 import { VoiceButton } from '@/components/ui/VoiceButton';
 import { DriverPoints } from '@/components/ui/DriverPoints';
-import { getAISuggestions, mockDriverProfile, mockNotifications } from '@/data/mockData';
+import { TrafficAlert } from '@/components/ui/TrafficAlert';
+import { WeatherWidget } from '@/components/ui/WeatherWidget';
+import { FuelStationCard } from '@/components/ui/FuelStationCard';
+import { FrequentDestination } from '@/components/ui/FrequentDestination';
+import { VoiceAssistant } from '@/components/ui/VoiceAssistant';
+import { 
+  getAISuggestions, 
+  mockDriverProfile, 
+  mockNotifications,
+  mockTrafficAlerts,
+  mockFuelStations,
+  mockWeatherData,
+  mockFrequentDestinations,
+  mockDiscountOffers
+} from '@/data/mockData';
 
 export const HomePage = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -41,6 +55,17 @@ export const HomePage = () => {
     setDismissedAlerts(prev => [...prev, alertId]);
   };
 
+  const handleNavigate = (destination: any) => {
+    console.log('Navigate to:', destination);
+    // Simulate navigation
+  };
+
+  const handleVoiceAssistantCommand = (command: string) => {
+    console.log('Voice Assistant command:', command);
+    // Process voice commands
+    handleVoiceCommand(command);
+  };
+
   return (
     <div className="h-screen overflow-hidden flex flex-col">
       {/* Header */}
@@ -69,145 +94,145 @@ export const HomePage = () => {
         <VoiceButton onCommand={handleVoiceCommand} />
       </div>
 
-      {/* Scrollable Content */}
-      <div className="flex-1 overflow-y-auto p-4 compact-spacing">
-        {/* Urgent Notifications */}
-        {urgentNotifications.length > 0 && (
-          <div className="space-y-2 animate-fade-in">
-            <h2 className="text-lg font-semibold text-destructive flex items-center gap-2">
-              <Zap size={18} />
-              Urgent Alerts
-            </h2>
-            {urgentNotifications.map((notification) => (
-              <NeuroCard key={notification.id} urgent className="border-destructive compact-card hover-lift">
-                <div className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-destructive text-sm">{notification.title}</h3>
-                    <p className="text-xs mt-1">{notification.message}</p>
-                    <p className="text-xs text-muted-foreground mt-1">{notification.time}</p>
-                  </div>
-                  <button
-                    onClick={() => dismissAlert(notification.id)}
-                    className="neuro-button p-1 ml-2 text-xs hover:scale-110 transition-transform"
-                  >
-                    ✕
-                  </button>
-                </div>
-              </NeuroCard>
+      {/* Main Dashboard - Single Screen Layout */}
+      <div className="flex-1 p-4 grid grid-cols-12 gap-3 compact-spacing overflow-hidden">
+        {/* Traffic Alerts Column */}
+        <div className="col-span-12 lg:col-span-3 space-y-2">
+          <div className="flex items-center gap-2 mb-2">
+            <AlertTriangle size={16} className="text-destructive" />
+            <h2 className="font-semibold text-sm">Traffic & Road Info</h2>
+          </div>
+          <div className="space-y-2 max-h-80 overflow-y-auto">
+            {mockTrafficAlerts.map((alert) => (
+              <TrafficAlert key={alert.id} alert={alert} />
             ))}
           </div>
-        )}
+        </div>
 
-        {/* Two Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          {/* Left Column */}
-          <div className="space-y-4">
-            {/* Now Playing - Compact */}
-            <NeuroCard className="bg-gradient-to-r from-primary/20 to-primary-glow/20 border border-primary/30 compact-card hover-lift animate-fade-in">
-              <div className="flex justify-between items-center">
-                <div className="flex-1">
-                  <h3 className="font-semibold text-primary text-sm">🎵 Now Playing</h3>
-                  <p className="text-sm">{currentSong}</p>
-                </div>
-                <button
-                  onClick={() => setIsPlaying(!isPlaying)}
-                  className="neuro-button-primary touch-target rounded-full w-12 h-12 hover:scale-110 transition-transform"
-                >
-                  {isPlaying ? <Pause size={18} /> : <Play size={18} />}
-                </button>
-              </div>
-            </NeuroCard>
-
-            {/* AI Suggestions - Compact Grid */}
-            <div className="grid grid-cols-2 gap-3">
-              <NeuroCard className="hover-lift cursor-pointer compact-card animate-scale-in">
-                <div className="text-center space-y-1">
-                  <h3 className="font-semibold text-primary text-sm">🎵 Music</h3>
-                  <p className="text-xs">{suggestions.music.title}</p>
-                  <span className="inline-block px-2 py-1 bg-primary/20 text-primary text-xs rounded-full">
-                    {suggestions.music.genre}
-                  </span>
-                </div>
-              </NeuroCard>
-
-              <NeuroCard className="hover-lift cursor-pointer compact-card animate-scale-in">
-                <div className="text-center space-y-1">
-                  <h3 className="font-semibold text-warning text-sm">🍽️ Food</h3>
-                  <p className="text-xs">{suggestions.food.item}</p>
-                  <span className="inline-block px-2 py-1 bg-warning/20 text-warning text-xs rounded-full">
-                    ₹{suggestions.food.price}
-                  </span>
-                </div>
-              </NeuroCard>
-            </div>
-
-            {/* Quick Actions */}
-            <div className="grid grid-cols-2 gap-3">
-              <NeuroCard className="hover-lift cursor-pointer bg-gradient-to-r from-accent/20 to-primary/20 border-accent/30 compact-card animate-fade-in">
-                <div className="text-center space-y-1">
-                  <MapPin className="text-accent mx-auto" size={20} />
-                  <h3 className="font-semibold text-accent text-sm">Navigate</h3>
-                </div>
-              </NeuroCard>
-              
-              <NeuroCard className="hover-lift cursor-pointer bg-gradient-to-r from-warning/20 to-success/20 border-warning/30 compact-card animate-fade-in">
-                <div className="text-center space-y-1">
-                  <Zap className="text-warning mx-auto" size={20} />
-                  <h3 className="font-semibold text-warning text-sm">Voice</h3>
-                </div>
-              </NeuroCard>
-            </div>
-          </div>
-
-          {/* Right Column - Map */}
-          <div className="space-y-4">
-            <NeuroCard className="compact-card animate-fade-in">
-              <div className="space-y-2">
-                <h3 className="font-semibold text-accent flex items-center gap-2 text-sm">
-                  <MapPin size={16} />
-                  Coimbatore Map
-                </h3>
-                <div className="w-full h-48 bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg relative overflow-hidden">
-                  {/* Mock Coimbatore Map */}
-                  <div className="absolute inset-0 bg-green-100/30">
-                    {/* Road lines */}
-                    <div className="absolute top-1/3 left-0 right-0 h-1 bg-gray-400/50"></div>
-                    <div className="absolute top-2/3 left-0 right-0 h-1 bg-gray-400/50"></div>
-                    <div className="absolute left-1/3 top-0 bottom-0 w-1 bg-gray-400/50"></div>
-                    <div className="absolute left-2/3 top-0 bottom-0 w-1 bg-gray-400/50"></div>
-                    
-                    {/* Location pin for Coimbatore */}
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                      <div className="w-6 h-6 bg-destructive rounded-full flex items-center justify-center text-white text-xs animate-pulse">
-                        📍
-                      </div>
-                      <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs bg-white px-2 py-1 rounded shadow">
-                        You are here
-                      </div>
+        {/* Central Info Column */}
+        <div className="col-span-12 lg:col-span-6 space-y-3">
+          {/* Urgent Notifications Row */}
+          {urgentNotifications.length > 0 && (
+            <div className="grid grid-cols-1 gap-2">
+              {urgentNotifications.slice(0, 1).map((notification) => (
+                <NeuroCard key={notification.id} urgent className="border-destructive compact-card hover-lift">
+                  <div className="flex justify-between items-start">
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-destructive text-sm">{notification.title}</h3>
+                      <p className="text-xs mt-1">{notification.message}</p>
                     </div>
-                    
-                    {/* Landmarks */}
-                    <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400/60 rounded animate-pulse"></div>
-                    <div className="absolute top-3/4 left-3/4 w-2 h-2 bg-yellow-400/60 rounded animate-pulse"></div>
-                  </div>
-                  
-                  <div className="absolute bottom-2 right-2">
-                    <button className="neuro-button-primary px-2 py-1 text-xs hover:scale-105 transition-transform">
-                      📍 Navigate
+                    <button
+                      onClick={() => dismissAlert(notification.id)}
+                      className="neuro-button p-1 ml-2 text-xs hover:scale-110 transition-transform"
+                    >
+                      ✕
                     </button>
                   </div>
+                </NeuroCard>
+              ))}
+            </div>
+          )}
+
+          {/* Current Status Row */}
+          <div className="grid grid-cols-3 gap-3">
+            {/* Now Playing */}
+            <NeuroCard className="bg-gradient-to-r from-primary/20 to-primary-glow/20 border border-primary/30 compact-card hover-lift">
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setIsPlaying(!isPlaying)}
+                  className="neuro-button-primary rounded-full w-8 h-8 hover:scale-110 transition-transform"
+                >
+                  {isPlaying ? <Pause size={14} /> : <Play size={14} />}
+                </button>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-primary text-xs">🎵 Playing</h3>
+                  <p className="text-xs truncate">{currentSong}</p>
                 </div>
               </div>
             </NeuroCard>
 
-            {/* News Update - Compact */}
-            <NeuroCard className="compact-card animate-fade-in">
-              <div className="space-y-2">
-                <h3 className="font-semibold text-accent text-sm">📰 Quick Update</h3>
-                <p className="text-xs text-muted-foreground">{suggestions.news}</p>
+            {/* Weather */}
+            <WeatherWidget weather={mockWeatherData} />
+
+            {/* Voice Assistant */}
+            <NeuroCard className="bg-gradient-to-r from-purple-50/50 to-blue-100/50 border-purple-200 compact-card">
+              <div className="flex items-center gap-2">
+                <VoiceButton onCommand={handleVoiceAssistantCommand} className="w-8 h-8" />
+                <div>
+                  <h3 className="font-semibold text-xs text-purple-700">Voice</h3>
+                  <p className="text-xs text-muted-foreground">Tap to speak</p>
+                </div>
               </div>
             </NeuroCard>
           </div>
+
+          {/* Frequent Destinations */}
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <Route size={16} className="text-accent" />
+              <h3 className="font-semibold text-sm">Frequent Destinations</h3>
+            </div>
+            <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto">
+              {mockFrequentDestinations.slice(0, 4).map((destination) => (
+                <FrequentDestination 
+                  key={destination.id} 
+                  destination={destination} 
+                  onNavigate={handleNavigate}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Right Sidebar */}
+        <div className="col-span-12 lg:col-span-3 space-y-3">
+          {/* Fuel Stations */}
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <Fuel size={16} className="text-warning" />
+              <h3 className="font-semibold text-sm">Nearby Fuel</h3>
+            </div>
+            <div className="space-y-2 max-h-48 overflow-y-auto">
+              {mockFuelStations.slice(0, 3).map((station) => (
+                <FuelStationCard key={station.id} station={station} />
+              ))}
+            </div>
+          </div>
+
+          {/* Exclusive Offers */}
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <Calendar size={16} className="text-success" />
+              <h3 className="font-semibold text-sm">Driver Deals</h3>
+            </div>
+            <div className="space-y-2">
+              {mockDiscountOffers.slice(0, 2).map((offer) => (
+                <NeuroCard key={offer.id} className="compact-card hover-lift cursor-pointer bg-gradient-to-r from-success/10 to-primary/10 border-success/30">
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between">
+                      <h4 className="font-semibold text-sm text-success">{offer.restaurant}</h4>
+                      <span className="text-xs bg-success text-success-foreground px-2 py-1 rounded-full">
+                        {offer.offer}
+                      </span>
+                    </div>
+                    <p className="text-xs text-muted-foreground">{offer.description}</p>
+                    <div className="flex justify-between text-xs">
+                      <span className="text-muted-foreground">Valid: {offer.validTill}</span>
+                      <span className="text-accent">{offer.distance}</span>
+                    </div>
+                  </div>
+                </NeuroCard>
+              ))}
+            </div>
+          </div>
+
+          {/* Quick News */}
+          <NeuroCard className="compact-card">
+            <div className="space-y-1">
+              <h3 className="font-semibold text-accent text-sm">📰 Quick Update</h3>
+              <p className="text-xs text-muted-foreground">{suggestions.news}</p>
+            </div>
+          </NeuroCard>
         </div>
       </div>
     </div>

@@ -270,3 +270,165 @@ export const mockDriverProfile = {
   favoriteGenre: 'Tamil Folk',
   favoriteRestaurant: 'A2B'
 };
+
+// Driver Dashboard Mock Data
+export const mockTrafficAlerts = [
+  {
+    id: '1',
+    type: 'construction' as const,
+    title: 'Road Construction',
+    description: 'Avinashi Road - Lane closure near Peelamedu',
+    severity: 'high' as const,
+    eta: '+15 mins',
+    distance: '2.3 km',
+    icon: '🚧'
+  },
+  {
+    id: '2',
+    type: 'accident' as const,
+    title: 'Traffic Jam',
+    description: 'Trichy Road - Heavy traffic near Gandhipuram',
+    severity: 'medium' as const,
+    eta: '+8 mins',
+    distance: '1.8 km',
+    icon: '🚗'
+  },
+  {
+    id: '3',
+    type: 'roadblock' as const,
+    title: 'Police Check Post',
+    description: 'Mettupalayam Road - Vehicle checking in progress',
+    severity: 'low' as const,
+    eta: '+3 mins',
+    distance: '0.5 km',
+    icon: '👮'
+  }
+];
+
+export const mockFuelStations = [
+  {
+    id: '1',
+    name: 'Indian Oil Petrol Pump',
+    distance: '0.8 km',
+    price: '₹102.45/L',
+    offers: '5% cashback with SBI Card',
+    availability: 'Open 24/7',
+    rating: 4.2,
+    icon: '⛽'
+  },
+  {
+    id: '2',
+    name: 'HP Petrol Bunk',
+    distance: '1.2 km',
+    price: '₹102.38/L',
+    offers: 'Free air check',
+    availability: 'Open till 10 PM',
+    rating: 4.0,
+    icon: '⛽'
+  },
+  {
+    id: '3',
+    name: 'Reliance Fuel Station',
+    distance: '2.1 km',
+    price: '₹102.52/L',
+    offers: '10% off on engine oil',
+    availability: 'Open 24/7',
+    rating: 4.3,
+    icon: '⛽'
+  }
+];
+
+export const mockWeatherData = {
+  current: {
+    temperature: '28°C',
+    condition: 'Partly Cloudy',
+    humidity: '65%',
+    windSpeed: '12 km/h',
+    visibility: '8 km',
+    icon: '⛅',
+    drivingCondition: 'Good'
+  },
+  hourly: [
+    { time: '2 PM', temp: '30°C', condition: 'Sunny', icon: '☀️' },
+    { time: '4 PM', temp: '32°C', condition: 'Hot', icon: '🌡️' },
+    { time: '6 PM', temp: '29°C', condition: 'Partly Cloudy', icon: '⛅' },
+    { time: '8 PM', temp: '26°C', condition: 'Clear', icon: '🌙' }
+  ]
+};
+
+export const mockFrequentDestinations = [
+  {
+    id: '1',
+    name: 'Office - Tidel Park',
+    address: 'TIDEL Park, Coimbatore',
+    distance: '12.5 km',
+    eta: '22 mins',
+    traffic: 'Moderate',
+    lastVisited: 'Yesterday',
+    icon: '🏢',
+    trafficColor: 'warning' as const
+  },
+  {
+    id: '2',
+    name: 'Home',
+    address: 'RS Puram, Coimbatore',
+    distance: '8.3 km',
+    eta: '15 mins',
+    traffic: 'Light',
+    lastVisited: 'This morning',
+    icon: '🏠',
+    trafficColor: 'success' as const
+  },
+  {
+    id: '3',
+    name: 'Brookefields Mall',
+    address: 'Brookefields Mall, Coimbatore',
+    distance: '5.7 km',
+    eta: '18 mins',
+    traffic: 'Heavy',
+    lastVisited: '2 days ago',
+    icon: '🛍️',
+    trafficColor: 'destructive' as const
+  },
+  {
+    id: '4',
+    name: 'Airport',
+    address: 'Coimbatore International Airport',
+    distance: '15.2 km',
+    eta: '28 mins',
+    traffic: 'Light',
+    lastVisited: '1 week ago',
+    icon: '✈️',
+    trafficColor: 'success' as const
+  }
+];
+
+export const mockDiscountOffers = [
+  {
+    id: '1',
+    restaurant: 'A2B',
+    offer: '25% OFF',
+    description: 'On orders above ₹300',
+    validTill: '6 PM Today',
+    distance: '0.8 km',
+    type: 'exclusive'
+  },
+  {
+    id: '2',
+    restaurant: 'Junior Kuppanna',
+    offer: 'Buy 1 Get 1',
+    description: 'On all biryanis',
+    validTill: '9 PM Today',
+    distance: '2.5 km',
+    type: 'driver-special'
+  },
+  {
+    id: '3',
+    restaurant: 'Annapoorna',
+    offer: 'Free Delivery',
+    description: 'No minimum order',
+    validTill: 'All day',
+    distance: '1.2 km',
+    type: 'partner'
+  }
+];
