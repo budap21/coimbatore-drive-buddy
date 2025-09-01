@@ -1,7 +1,10 @@
-import { useState } from 'react';
-import { Search, Heart, Star, Clock, Truck, Leaf, CircleDot, MapPin, Filter, List, Map } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Search, Heart, Star, Clock, Truck, Leaf, CircleDot, MapPin, Filter, List, Map, UtensilsCrossed } from 'lucide-react';
 import { NeuroCard } from '@/components/ui/NeuroCard';
 import { VoiceButton } from '@/components/ui/VoiceButton';
+import { EmptyState } from '@/components/ui/EmptyState';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { mockRestaurants } from '@/data/mockData';
 
 export const FoodPage = () => {
@@ -9,27 +12,32 @@ export const FoodPage = () => {
   const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRestaurant, setSelectedRestaurant] = useState<string | null>(null);
-  const [favorites, setFavorites] = useState<string[]>(['1']);
-  const [cart, setCart] = useState<{[key: string]: number}>({});
+  const [favorites, setFavorites] = useLocalStorage<string[]>('food-favorites', ['1']);
+  const [cart, setCart] = useLocalStorage<{[key: string]: number}>('food-cart', {});
   const [sortBy, setSortBy] = useState<'distance' | 'rating' | 'delivery'>('distance');
 
-  const filteredRestaurants = mockRestaurants
-    .filter(restaurant =>
-      restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      restaurant.cuisine.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    .sort((a, b) => {
-      switch (sortBy) {
-        case 'distance':
-          return parseFloat(a.distance) - parseFloat(b.distance);
-        case 'rating':
-          return b.rating - a.rating;
-        case 'delivery':
-          return parseInt(a.deliveryTime) - parseInt(b.deliveryTime);
-        default:
-          return 0;
-      }
-    });
+  // Debounce search for better performance
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
+
+  const filteredRestaurants = useMemo(() => {
+    return mockRestaurants
+      .filter(restaurant =>
+        restaurant.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
+        restaurant.cuisine.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
+      )
+      .sort((a, b) => {
+        switch (sortBy) {
+          case 'distance':
+            return parseFloat(a.distance) - parseFloat(b.distance);
+          case 'rating':
+            return b.rating - a.rating;
+          case 'delivery':
+            return parseInt(a.deliveryTime) - parseInt(b.deliveryTime);
+          default:
+            return 0;
+        }
+      });
+  }, [debouncedSearchQuery, sortBy]);
 
   const handleVoiceCommand = (command: string) => {
     console.log('Food voice command:', command);
@@ -239,10 +247,21 @@ export const FoodPage = () => {
             </div>
           </div>
         </NeuroCard>
-      ) : (
+        ) : (
         !selectedRestaurant ? (
         <div className="space-y-4">
-          {filteredRestaurants.map((restaurant) => (
+          {filteredRestaurants.length === 0 ? (
+            <EmptyState
+              icon={<UtensilsCrossed size={32} />}
+              title="No restaurants found"
+              description="Try adjusting your search criteria or location"
+              action={{
+                label: "Clear Search",
+                onClick: () => setSearchQuery('')
+              }}
+            />
+          ) : (
+            filteredRestaurants.map((restaurant) => (
             <NeuroCard key={restaurant.id} className="hover:scale-105 cursor-pointer">
               <div 
                 className="space-y-4"
@@ -316,7 +335,8 @@ export const FoodPage = () => {
                 </div>
               </div>
             </NeuroCard>
-          ))}
+            ))
+          )}
         </div>
         ) : (
           // Restaurant Details View

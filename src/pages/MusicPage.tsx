@@ -1,7 +1,10 @@
-import { useState } from 'react';
-import { Play, Pause, Heart, Search, Radio, Volume2, SkipBack, SkipForward } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Play, Pause, Heart, Search, Radio, Volume2, SkipBack, SkipForward, Music } from 'lucide-react';
 import { NeuroCard } from '@/components/ui/NeuroCard';
 import { VoiceButton } from '@/components/ui/VoiceButton';
+import { EmptyState } from '@/components/ui/EmptyState';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { mockSongs, mockFMStations } from '@/data/mockData';
 
 export const MusicPage = () => {
@@ -10,16 +13,21 @@ export const MusicPage = () => {
   const [isPlaying, setIsPlaying] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
-  const [favorites, setFavorites] = useState<string[]>(['1', '3']);
+  const [favorites, setFavorites] = useLocalStorage<string[]>('music-favorites', ['1', '3']);
 
   const genres = ['All', 'Pop', 'Classical', 'Devotional', 'Folk', 'Romantic'];
   
-  const filteredSongs = mockSongs.filter(song => {
-    const matchesSearch = song.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         song.artist.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesGenre = !selectedGenre || selectedGenre === 'All' || song.genre === selectedGenre;
-    return matchesSearch && matchesGenre;
-  });
+  // Debounce search query for better performance
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
+  
+  const filteredSongs = useMemo(() => {
+    return mockSongs.filter(song => {
+      const matchesSearch = song.title.toLowerCase().includes(debouncedSearchQuery.toLowerCase()) ||
+                           song.artist.toLowerCase().includes(debouncedSearchQuery.toLowerCase());
+      const matchesGenre = !selectedGenre || selectedGenre === 'All' || song.genre === selectedGenre;
+      return matchesSearch && matchesGenre;
+    });
+  }, [debouncedSearchQuery, selectedGenre]);
 
   const handleVoiceCommand = (command: string) => {
     console.log('Music voice command:', command);
@@ -149,7 +157,21 @@ export const MusicPage = () => {
 
           {/* Songs List */}
           <div className="space-y-3">
-            {filteredSongs.map((song) => (
+            {filteredSongs.length === 0 ? (
+              <EmptyState
+                icon={<Music size={32} />}
+                title="No songs found"
+                description="Try adjusting your search or filter criteria"
+                action={{
+                  label: "Clear Filters",
+                  onClick: () => {
+                    setSearchQuery('');
+                    setSelectedGenre(null);
+                  }
+                }}
+              />
+            ) : (
+              filteredSongs.map((song) => (
               <NeuroCard key={song.id} className="hover:scale-105 cursor-pointer">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
@@ -185,7 +207,8 @@ export const MusicPage = () => {
                   </button>
                 </div>
               </NeuroCard>
-            ))}
+              ))
+            )}
           </div>
         </div>
       )}
