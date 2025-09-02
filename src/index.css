@@ -8,43 +8,43 @@
 
 @layer base {
   :root {
-    /* Enhanced Dark Theme */
-    --background: 220 15% 6%;
-    --foreground: 220 8% 95%;
+    /* Monochromatic Theme - Dark */
+    --background: 0 0% 8%;
+    --foreground: 0 0% 95%;
     
-    /* Enhanced Primary Colors */
-    --primary: 220 91% 60%;
-    --primary-foreground: 220 15% 6%;
-    --primary-glow: 220 91% 70%;
+    /* Primary Colors - Minimal Blue Accent */
+    --primary: 220 70% 50%;
+    --primary-foreground: 0 0% 98%;
+    --primary-glow: 220 70% 60%;
     
-    /* Neumorphic Colors */
-    --neuro-dark: 220 15% 4%;
-    --neuro-light: 220 13% 12%;
-    --neuro-border: 220 13% 20%;
+    /* Neumorphic Grays */
+    --neuro-dark: 0 0% 5%;
+    --neuro-light: 0 0% 12%;
+    --neuro-border: 0 0% 18%;
     
     /* Card Colors */
-    --card: 220 13% 9%;
-    --card-foreground: 220 8% 95%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 95%;
     
-    /* Secondary & Accent Colors */
-    --secondary: 220 13% 15%;
-    --secondary-foreground: 220 8% 95%;
-    --accent: 280 91% 60%;
-    --accent-foreground: 220 15% 6%;
+    /* Secondary Colors - Monochromatic */
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 90%;
+    --accent: 0 0% 25%;
+    --accent-foreground: 0 0% 95%;
     
-    /* Enhanced Status Colors */
-    --success: 120 84% 60%;
-    --success-foreground: 220 15% 6%;
-    --warning: 45 100% 60%;
-    --warning-foreground: 220 15% 6%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 220 15% 6%;
-    --info: 200 91% 60%;
-    --info-foreground: 220 15% 6%;
+    /* Minimal Status Colors */
+    --success: 120 30% 45%;
+    --success-foreground: 0 0% 98%;
+    --warning: 45 50% 50%;
+    --warning-foreground: 0 0% 10%;
+    --destructive: 0 40% 50%;
+    --destructive-foreground: 0 0% 98%;
+    --info: 200 30% 50%;
+    --info-foreground: 0 0% 98%;
     
-    /* Muted Colors */
-    --muted: 220 13% 15%;
-    --muted-foreground: 220 8% 70%;
+    /* Muted Grays */
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
     
     /* Border and Input */
     --border: 220 13% 20%;

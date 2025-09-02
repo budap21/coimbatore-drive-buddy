@@ -296,18 +296,19 @@ export const mockTrafficAlerts = [
   {
     id: '3',
     type: 'roadblock' as const,
-    title: 'Police Check Post',
-    description: 'Mettupalayam Road - Vehicle checking in progress',
-    severity: 'low' as const,
-    eta: '+3 mins',
-    distance: '0.5 km',
-    icon: '👮'
+    title: 'Road Block',
+    description: 'Sathy Road - Construction debris blocking lane',
+    severity: 'medium' as const,
+    eta: '+5 mins',
+    distance: '1.1 km',
+    icon: '🚧'
   }
 ];
 
-export const mockFuelStations = [
+export const mockDriverServices = [
   {
     id: '1',
+    type: 'fuel' as const,
     name: 'Indian Oil Petrol Pump',
     distance: '0.8 km',
     price: '₹102.45/L',
@@ -318,6 +319,40 @@ export const mockFuelStations = [
   },
   {
     id: '2',
+    type: 'puncture' as const,
+    name: 'Quick Fix Puncture Shop',
+    distance: '0.5 km',
+    price: '₹50-₹150',
+    offers: 'Emergency service available',
+    availability: 'Open 6 AM - 10 PM',
+    rating: 4.1,
+    icon: '🔧'
+  },
+  {
+    id: '3',
+    type: 'service' as const,
+    name: 'Maruti Service Center',
+    distance: '1.8 km',
+    price: 'Service from ₹2000',
+    offers: 'Genuine parts warranty',
+    availability: 'Open 9 AM - 7 PM',
+    rating: 4.4,
+    icon: '🔧'
+  },
+  {
+    id: '4',
+    type: 'wash' as const,
+    name: 'Auto Spa Car Wash',
+    distance: '1.1 km',
+    price: '₹200-₹500',
+    offers: 'Premium wax included',
+    availability: 'Open 8 AM - 8 PM',
+    rating: 4.3,
+    icon: '🚿'
+  },
+  {
+    id: '5',
+    type: 'fuel' as const,
     name: 'HP Petrol Bunk',
     distance: '1.2 km',
     price: '₹102.38/L',
@@ -327,14 +362,15 @@ export const mockFuelStations = [
     icon: '⛽'
   },
   {
-    id: '3',
-    name: 'Reliance Fuel Station',
-    distance: '2.1 km',
-    price: '₹102.52/L',
-    offers: '10% off on engine oil',
+    id: '6',
+    type: 'puncture' as const,
+    name: 'Road Side Tyre Care',
+    distance: '2.3 km',
+    price: '₹40-₹120',
+    offers: '24/7 emergency service',
     availability: 'Open 24/7',
-    rating: 4.3,
-    icon: '⛽'
+    rating: 3.9,
+    icon: '🛞'
   }
 ];
 
