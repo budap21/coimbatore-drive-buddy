@@ -229,29 +229,54 @@ export const HomePage = () => {
         {/* Traffic & Services */}
         <aside className="col-span-4 row-span-1 grid grid-rows-2 gap-4">
           {/* Traffic Status */}
-          <div className="glass-card p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <Navigation size={16} className="text-warning" />
-              <h3 className="heading-sm">Road Status</h3>
+          <div className="glass-card p-3">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2">
+                <Navigation size={14} className="text-warning" />
+                <h3 className="body-md font-semibold">Road Status</h3>
+              </div>
+              <span className="body-sm text-muted-foreground">{mockTrafficAlerts.length} alerts</span>
             </div>
-            <div className="space-y-2 compact-scroll max-h-20 overflow-y-auto">
-              {mockTrafficAlerts.slice(0, 3).map((alert) => (
-                <TrafficAlert key={alert.id} alert={alert} />
-              ))}
-            </div>
+            {/* Show only the most critical alert */}
+            {mockTrafficAlerts.length > 0 && (
+              <div className="flex items-center gap-3 p-2 rounded-lg surface-elevated">
+                <div className="text-lg">{mockTrafficAlerts[0].icon}</div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="body-sm font-medium truncate">{mockTrafficAlerts[0].title}</h4>
+                  <div className="flex items-center gap-3 body-xs text-muted-foreground">
+                    <span>{mockTrafficAlerts[0].distance}</span>
+                    <span className="text-warning font-medium">{mockTrafficAlerts[0].eta}</span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Quick Services */}
-          <div className="glass-card p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <Shield size={16} className="text-success" />
-              <h3 className="heading-sm">Services</h3>
+          <div className="glass-card p-3">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2">
+                <Shield size={14} className="text-success" />
+                <h3 className="body-md font-semibold">Services</h3>
+              </div>
+              <span className="body-sm text-muted-foreground">{mockDriverServices.length} nearby</span>
             </div>
-            <div className="space-y-2 compact-scroll max-h-20 overflow-y-auto">
-              {mockDriverServices.slice(0, 3).map((service) => (
-                <ServiceCard key={service.id} service={service} />
-              ))}
-            </div>
+            {/* Show only the closest/best service */}
+            {mockDriverServices.length > 0 && (
+              <div className="flex items-center gap-3 p-2 rounded-lg surface-elevated">
+                <div className="text-lg">{mockDriverServices[0].icon}</div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="body-sm font-medium truncate">{mockDriverServices[0].name}</h4>
+                  <div className="flex items-center justify-between body-xs">
+                    <span className="text-muted-foreground">{mockDriverServices[0].distance}</span>
+                    <div className="flex items-center gap-1">
+                      <Star size={10} className="text-yellow-500 fill-current" />
+                      <span>{mockDriverServices[0].rating}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </aside>
 
