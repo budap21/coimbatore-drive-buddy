@@ -1,6 +1,25 @@
 import { useState, useEffect } from 'react';
-import { Play, Pause, MapPin, Clock, Zap, AlertTriangle, Route, Calendar, Gauge } from 'lucide-react';
-import { NeuroCard } from '@/components/ui/NeuroCard';
+import { 
+  Play, 
+  Pause, 
+  MapPin, 
+  Clock, 
+  Zap, 
+  AlertTriangle, 
+  Route, 
+  Calendar, 
+  Gauge, 
+  Navigation, 
+  Thermometer, 
+  Fuel, 
+  Shield,
+  Music,
+  Mic,
+  Star,
+  TrendingUp,
+  Battery,
+  Signal
+} from 'lucide-react';
 import { VoiceButton } from '@/components/ui/VoiceButton';
 import { TrafficAlert } from '@/components/ui/TrafficAlert';
 import { FrequentDestination } from '@/components/ui/FrequentDestination';
@@ -65,150 +84,186 @@ export const HomePage = () => {
   };
 
   return (
-    <div className="h-screen overflow-hidden flex flex-col bg-gradient-to-br from-background via-background to-card/50">
-      {/* Automotive Header */}
-      <div className="flex justify-between items-center p-4 border-b border-border/30 bg-card/30 backdrop-blur-sm">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-              <Gauge size={18} className="text-primary" />
-            </div>
-            <div>
-              <h1 className="text-lg font-bold text-foreground">DriverHub</h1>
-              <p className="text-xs text-muted-foreground flex items-center gap-2">
-                <Clock size={12} />
-                {currentTime.toLocaleTimeString('en-IN', { 
-                  hour: '2-digit', 
-                  minute: '2-digit',
-                  hour12: true 
-                })}
-                <MapPin size={12} className="ml-2" />
-                Coimbatore, TN
-              </p>
-            </div>
-          </div>
-        </div>
-        
-        <div className="flex items-center gap-3">
-          <div className="text-sm text-muted-foreground">
-            Good {getTimeOfDay()}, {mockDriverProfile.name}
-          </div>
-          <VoiceButton onCommand={handleVoiceCommand} />
-        </div>
+    <div className="dashboard-grid bg-background relative overflow-hidden">
+      {/* Ambient Background */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute inset-0" style={{ background: 'var(--gradient-ambient)' }}></div>
+        <div className="absolute inset-0" style={{ background: 'var(--gradient-hero)' }}></div>
       </div>
 
-      {/* Main Dashboard - Automotive Grid Layout */}
-      <div className="flex-1 p-3 grid grid-rows-3 gap-3 overflow-hidden">
-        
-        {/* Top Row - Primary Controls */}
-        <div className="grid grid-cols-12 gap-3">
-          {/* Traffic & Alerts */}
-          <div className="col-span-3 space-y-2">
-            <div className="flex items-center gap-2 mb-2">
-              <AlertTriangle size={14} className="text-warning" />
-              <h2 className="font-medium text-sm text-foreground">Road Status</h2>
+      {/* Premium Header */}
+      <header className="relative z-10 glass-card mx-4 mt-4 p-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl automotive-button-primary flex items-center justify-center">
+                <Gauge size={20} className="text-primary-foreground" />
+              </div>
+              <div>
+                <h1 className="heading-lg">DriverHub</h1>
+                <div className="flex items-center gap-4 body-sm">
+                  <div className="flex items-center gap-1">
+                    <Clock size={12} />
+                    <span>{currentTime.toLocaleTimeString('en-IN', { 
+                      hour: '2-digit', 
+                      minute: '2-digit',
+                      hour12: true 
+                    })}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <MapPin size={12} />
+                    <span>Coimbatore, TN</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Signal size={12} className="text-success" />
+                    <span className="text-success">Online</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="space-y-1.5 max-h-32 overflow-y-auto">
+          </div>
+          
+          <div className="flex items-center gap-6">
+            <div className="body-md">
+              Good {getTimeOfDay()}, <span className="text-foreground font-semibold">{mockDriverProfile.name}</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1 body-sm">
+                <Battery size={12} className="text-success" />
+                <span>85%</span>
+              </div>
+              <VoiceButton onCommand={handleVoiceCommand} className="w-12 h-12" />
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Dashboard */}
+      <main className="flex-1 px-4 py-2 relative z-10 widget-grid grid-cols-12 grid-rows-2 gap-4">
+        
+        {/* Primary Control Center */}
+        <section className="col-span-8 row-span-1">
+          {/* Urgent Notifications */}
+          {urgentNotifications.length > 0 && (
+            <div className="mb-4">
+              {urgentNotifications.slice(0, 1).map((notification) => (
+                <div key={notification.id} className="glass-card p-3 status-destructive">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-destructive rounded-full animate-pulse-glow"></div>
+                      <div>
+                        <span className="heading-sm text-destructive">{notification.title}</span>
+                        <p className="body-sm ml-2">{notification.message}</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => dismissAlert(notification.id)}
+                      className="touch-premium text-destructive/60 hover:text-destructive"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Main Controls Grid */}
+          <div className="grid grid-cols-3 gap-4 h-28">
+            {/* Music Control */}
+            <div className="glass-card p-4 flex items-center gap-4 status-info">
+              <button
+                onClick={() => setIsPlaying(!isPlaying)}
+                className="w-16 h-16 rounded-2xl automotive-button-primary flex items-center justify-center group"
+              >
+                {isPlaying ? (
+                  <Pause size={20} className="text-primary-foreground group-hover:scale-110 transition-transform" />
+                ) : (
+                  <Play size={20} className="text-primary-foreground group-hover:scale-110 transition-transform ml-1" />
+                )}
+              </button>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <Music size={14} className="text-info" />
+                  <span className="body-sm text-info">Now Playing</span>
+                </div>
+                <h3 className="heading-sm truncate">{currentSong}</h3>
+                <div className="flex items-center gap-2 mt-2">
+                  <div className="h-1 bg-info/20 rounded-full flex-1">
+                    <div className="h-1 bg-info rounded-full w-1/3"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Weather Control */}
+            <div className="glass-card p-4 flex items-center gap-4 status-warning">
+              <div className="w-16 h-16 rounded-2xl surface-elevated flex items-center justify-center text-3xl">
+                {mockWeatherData.current.icon}
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <Thermometer size={14} className="text-warning" />
+                  <span className="body-sm text-warning">Weather</span>
+                </div>
+                <h3 className="heading-sm">{mockWeatherData.current.temperature}</h3>
+                <p className="body-sm">{mockWeatherData.current.condition}</p>
+                <p className="body-sm text-warning font-medium">{mockWeatherData.current.drivingCondition}</p>
+              </div>
+            </div>
+
+            {/* Voice Assistant */}
+            <div className="glass-card p-4 flex flex-col items-center justify-center gap-3 status-success">
+              <VoiceButton onCommand={handleVoiceAssistantCommand} className="w-16 h-16 animate-float" />
+              <div className="text-center">
+                <div className="flex items-center gap-2 justify-center mb-1">
+                  <Mic size={14} className="text-success" />
+                  <span className="body-sm text-success">Assistant</span>
+                </div>
+                <p className="body-sm">Tap to speak</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Traffic & Services */}
+        <aside className="col-span-4 row-span-1 grid grid-rows-2 gap-4">
+          {/* Traffic Status */}
+          <div className="glass-card p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <Navigation size={16} className="text-warning" />
+              <h3 className="heading-sm">Road Status</h3>
+            </div>
+            <div className="space-y-2 compact-scroll max-h-20 overflow-y-auto">
               {mockTrafficAlerts.slice(0, 3).map((alert) => (
                 <TrafficAlert key={alert.id} alert={alert} />
               ))}
             </div>
           </div>
 
-          {/* Central Control Panel */}
-          <div className="col-span-6">
-            {/* Urgent Alert Strip */}
-            {urgentNotifications.length > 0 && (
-              <div className="mb-3">
-                {urgentNotifications.slice(0, 1).map((notification) => (
-                  <NeuroCard key={notification.id} className="border-destructive/40 bg-destructive/5 p-2">
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-destructive rounded-full animate-pulse"></div>
-                        <div>
-                          <span className="font-medium text-destructive text-xs">{notification.title}</span>
-                          <span className="text-xs text-muted-foreground ml-2">{notification.message}</span>
-                        </div>
-                      </div>
-                      <button
-                        onClick={() => dismissAlert(notification.id)}
-                        className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-                      >
-                        ✕
-                      </button>
-                    </div>
-                  </NeuroCard>
-                ))}
-              </div>
-            )}
-
-            {/* Main Control Row - Perfectly Aligned */}
-            <div className="grid grid-cols-3 gap-3 h-20">
-              {/* Music Control */}
-              <NeuroCard className="bg-primary/5 border-primary/20 p-3 flex items-center gap-3">
-                <button
-                  onClick={() => setIsPlaying(!isPlaying)}
-                  className="w-12 h-12 rounded-full bg-primary/20 hover:bg-primary/30 flex items-center justify-center transition-all duration-300 hover:scale-105"
-                >
-                  {isPlaying ? <Pause size={16} className="text-primary" /> : <Play size={16} className="text-primary" />}
-                </button>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-medium text-xs text-foreground">Now Playing</h3>
-                  <p className="text-xs text-muted-foreground truncate">{currentSong}</p>
-                  <div className="flex items-center gap-1 mt-1">
-                    <div className="h-0.5 bg-primary/30 rounded flex-1"></div>
-                    <div className="h-0.5 bg-primary rounded w-8"></div>
-                    <div className="h-0.5 bg-primary/30 rounded flex-1"></div>
-                  </div>
-                </div>
-              </NeuroCard>
-
-              {/* Weather Control */}
-              <NeuroCard className="bg-info/5 border-info/20 p-3 flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-info/20 flex items-center justify-center">
-                  <span className="text-xl">{mockWeatherData.current.icon}</span>
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-medium text-xs text-foreground">{mockWeatherData.current.temperature}</h3>
-                  <p className="text-xs text-muted-foreground">{mockWeatherData.current.condition}</p>
-                  <p className="text-xs text-info font-medium">{mockWeatherData.current.drivingCondition}</p>
-                </div>
-              </NeuroCard>
-
-              {/* Voice Assistant */}
-              <NeuroCard className="bg-accent/5 border-accent/20 p-3 flex flex-col items-center justify-center gap-2">
-                <VoiceButton onCommand={handleVoiceAssistantCommand} className="w-12 h-12" />
-                <div className="text-center">
-                  <span className="text-xs font-medium text-foreground">Assistant</span>
-                  <p className="text-xs text-muted-foreground">Tap to speak</p>
-                </div>
-              </NeuroCard>
+          {/* Quick Services */}
+          <div className="glass-card p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <Shield size={16} className="text-success" />
+              <h3 className="heading-sm">Services</h3>
             </div>
-          </div>
-
-          {/* Services Panel */}
-          <div className="col-span-3 space-y-2">
-            <div className="flex items-center gap-2 mb-2">
-              <Zap size={14} className="text-success" />
-              <h3 className="font-medium text-sm text-foreground">Quick Services</h3>
-            </div>
-            <div className="space-y-1.5 max-h-32 overflow-y-auto">
-              {mockDriverServices.slice(0, 4).map((service) => (
+            <div className="space-y-2 compact-scroll max-h-20 overflow-y-auto">
+              {mockDriverServices.slice(0, 3).map((service) => (
                 <ServiceCard key={service.id} service={service} />
               ))}
             </div>
           </div>
-        </div>
+        </aside>
 
-        {/* Middle Row - Navigation & Offers */}
-        <div className="grid grid-cols-2 gap-3">
-          {/* Frequent Destinations */}
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <Route size={14} className="text-primary" />
-              <h3 className="font-medium text-sm text-foreground">Quick Routes</h3>
+        {/* Navigation & Deals */}
+        <section className="col-span-12 row-span-1 grid grid-cols-2 gap-4">
+          {/* Quick Routes */}
+          <div className="glass-card p-4">
+            <div className="flex items-center gap-2 mb-4">
+              <Route size={16} className="text-primary" />
+              <h3 className="heading-sm">Quick Routes</h3>
             </div>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-3">
               {mockFrequentDestinations.slice(0, 4).map((destination) => (
                 <FrequentDestination 
                   key={destination.id} 
@@ -219,48 +274,56 @@ export const HomePage = () => {
             </div>
           </div>
 
-          {/* Driver Deals */}
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <Calendar size={14} className="text-success" />
-              <h3 className="font-medium text-sm text-foreground">Exclusive Deals</h3>
+          {/* Exclusive Deals */}
+          <div className="glass-card p-4">
+            <div className="flex items-center gap-2 mb-4">
+              <Star size={16} className="text-success" />
+              <h3 className="heading-sm">Exclusive Deals</h3>
             </div>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-3">
               {mockDiscountOffers.slice(0, 4).map((offer) => (
-                <NeuroCard key={offer.id} className="p-2 hover-lift cursor-pointer bg-success/5 border-success/20">
-                  <div className="space-y-1">
+                <div key={offer.id} className="surface-elevated p-3 rounded-xl hover:surface-primary transition-all cursor-pointer group">
+                  <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <h4 className="font-medium text-xs text-foreground truncate">{offer.restaurant}</h4>
-                      <span className="text-xs bg-success/20 text-success px-1 py-0.5 rounded">
+                      <h4 className="body-md text-foreground truncate group-hover:text-success transition-colors">
+                        {offer.restaurant}
+                      </h4>
+                      <span className="status-success px-2 py-1 rounded-lg body-sm font-semibold">
                         {offer.offer}
                       </span>
                     </div>
-                    <p className="text-xs text-muted-foreground truncate">{offer.description}</p>
-                    <div className="flex justify-between text-xs text-muted-foreground">
+                    <p className="body-sm truncate">{offer.description}</p>
+                    <div className="flex justify-between body-sm">
                       <span className="truncate">{offer.validTill}</span>
-                      <span>{offer.distance}</span>
+                      <span className="text-primary font-medium">{offer.distance}</span>
                     </div>
                   </div>
-                </NeuroCard>
+                </div>
               ))}
             </div>
           </div>
-        </div>
+        </section>
+      </main>
 
-        {/* Bottom Row - Map */}
-        <div className="grid grid-cols-1">
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <MapPin size={14} className="text-primary" />
-                <h3 className="font-medium text-sm text-foreground">Navigation Map</h3>
-              </div>
-              <div className="text-xs text-muted-foreground">{suggestions.news}</div>
+      {/* Map Footer */}
+      <footer className="relative z-10 mx-4 mb-4">
+        <div className="glass-card p-4">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <MapPin size={16} className="text-primary" />
+              <h3 className="heading-sm">Navigation</h3>
             </div>
-            <MapWidget className="h-full min-h-32" />
+            <div className="flex items-center gap-4">
+              <div className="body-sm flex items-center gap-2">
+                <TrendingUp size={12} className="text-success" />
+                <span className="text-success">Live Traffic</span>
+              </div>
+              <div className="body-sm">{suggestions.news}</div>
+            </div>
           </div>
+          <MapWidget className="h-32 rounded-xl overflow-hidden" />
         </div>
-      </div>
+      </footer>
     </div>
   );
 };

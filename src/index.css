@@ -227,7 +227,7 @@
 }
 
 @layer utilities {
-  /* Enhanced Keyframes */
+  /* Premium Keyframes */
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -256,37 +256,11 @@
     }
   }
   
-  @keyframes pulseUrgent {
+  @keyframes pulseGlow {
     0%, 100% {
-      transform: scale(1);
-      box-shadow: 0 0 0 0 hsl(var(--destructive) / 0.7);
-    }
-    50% {
-      transform: scale(1.02);
-      box-shadow: 0 0 0 10px hsl(var(--destructive) / 0);
-    }
-  }
-  
-  @keyframes voicePulse {
-    0% {
-      transform: scale(0.95);
-      box-shadow: 0 0 0 0 hsl(var(--primary) / 0.7);
-    }
-    70% {
-      transform: scale(1);
-      box-shadow: 0 0 0 15px hsl(var(--primary) / 0);
-    }
-    100% {
-      transform: scale(0.95);
-      box-shadow: 0 0 0 0 hsl(var(--primary) / 0);
-    }
-  }
-  
-  @keyframes glow {
-    0%, 100% { 
       box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
     }
-    50% { 
+    50% {
       box-shadow: 0 0 40px hsl(var(--primary) / 0.6), 0 0 60px hsl(var(--primary) / 0.4);
     }
   }
@@ -296,66 +270,88 @@
       transform: translateY(0px);
     }
     50% { 
-      transform: translateY(-10px);
+      transform: translateY(-6px);
+    }
+  }
+  
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes fadeInScale {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
     }
   }
   
   /* Animation Classes */
-.animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out;
-}
-
-.animate-slide-in-right {
-  animation: slideInRight 0.5s ease-out;
-}
-
-.animate-fade-in-scale {
-  animation: fadeInScale 0.4s ease-out;
-}
-
-/* Improved focus styles for better accessibility */
-.focus-ring:focus {
-  outline: 2px solid hsl(var(--primary));
-  outline-offset: 2px;
-}
-
-/* Better touch targets for mobile */
-@media (max-width: 768px) {
-  .touch-target {
-    min-height: 48px;
-    min-width: 48px;
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
   }
-}
-
-/* Improved scrollbar styling */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: hsl(var(--muted) / 0.3);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted-foreground) / 0.4);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground) / 0.6);
-}
+  
+  .animate-slide-in-right {
+    animation: slideInRight 0.5s ease-out;
+  }
+  
+  .animate-fade-in-scale {
+    animation: fadeInScale 0.4s ease-out;
+  }
   
   .animate-scale-in-bounce {
     animation: scaleInBounce 0.8s ease-out;
   }
   
-  .animate-glow {
-    animation: glow 2s ease-in-out infinite;
+  .animate-pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
   }
   
   .animate-float {
     animation: float 3s ease-in-out infinite;
+  }
+  
+  /* Enhanced Focus Styles */
+  .focus-ring:focus {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+  }
+  
+  /* Touch Optimizations */
+  @media (max-width: 768px) {
+    .touch-premium {
+      min-height: 52px;
+      min-width: 52px;
+    }
+  }
+  
+  /* Premium Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--surface-primary));
+    border-radius: 3px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.5), hsl(var(--primary) / 0.3));
+    border-radius: 3px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.7), hsl(var(--primary) / 0.5));
   }
 }
