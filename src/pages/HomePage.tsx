@@ -126,108 +126,115 @@ export const HomePage = () => {
   const sortedWidgets = layout.sort((a, b) => a.position - b.position);
 
   return (
-    <div className="dashboard-grid bg-background relative overflow-hidden">
-      {/* Ambient Background */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute inset-0" style={{ background: 'var(--gradient-ambient)' }}></div>
-        <div className="absolute inset-0" style={{ background: 'var(--gradient-hero)' }}></div>
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      {/* Enhanced Ambient Background with Mirror Effects */}
+      <div className="fixed inset-0 opacity-40">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-secondary/10"></div>
+        <div className="absolute inset-0 bg-gradient-to-tr from-accent/5 via-transparent to-primary/5"></div>
+        <div className="absolute top-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
       </div>
 
-      {/* Premium Header */}
-      <header className="relative z-10 glass-card mx-4 mt-4 p-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl automotive-button-primary flex items-center justify-center">
-                <Gauge size={20} className="text-primary-foreground" />
-              </div>
-              <div>
-                <h1 className="heading-lg">DriverHub</h1>
-                <div className="flex items-center gap-4 body-sm">
-                  <div className="flex items-center gap-1">
-                    <Clock size={12} />
-                    <span>{currentTime.toLocaleTimeString('en-IN', { 
-                      hour: '2-digit', 
-                      minute: '2-digit',
-                      hour12: true 
-                    })}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <MapPin size={12} />
-                    <span>Coimbatore, TN</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Signal size={12} className="text-success" />
-                    <span className="text-success">Online</span>
+      {/* Premium Header with Mirror Effect */}
+      <header className="relative z-10 m-4">
+        <div className="glass-card p-6 backdrop-blur-xl border-2 border-white/20 shadow-2xl">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center shadow-lg">
+                  <Gauge size={24} className="text-white" />
+                </div>
+                <div>
+                  <h1 className="text-3xl font-bold bg-gradient-to-r from-primary via-primary-glow to-primary bg-clip-text text-transparent">
+                    DriverHub
+                  </h1>
+                  <div className="flex items-center gap-6 text-sm text-muted-foreground mt-1">
+                    <div className="flex items-center gap-2">
+                      <Clock size={14} />
+                      <span>{currentTime.toLocaleTimeString('en-IN', { 
+                        hour: '2-digit', 
+                        minute: '2-digit',
+                        hour12: true 
+                      })}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <MapPin size={14} />
+                      <span>Coimbatore, TN</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Signal size={14} className="text-emerald-500" />
+                      <span className="text-emerald-500 font-medium">Live Connected</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          
-          <div className="flex items-center gap-6">
-            <div className="body-md">
-              Good {getTimeOfDay()}, <span className="text-foreground font-semibold">{mockDriverProfile.name}</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1 body-sm">
-                <Battery size={12} className="text-success" />
-                <span>85%</span>
+            
+            <div className="flex items-center gap-6">
+              <div className="text-lg">
+                Good <span className="text-primary font-semibold">{getTimeOfDay()}</span>, 
+                <span className="text-foreground font-bold ml-1">{mockDriverProfile.name}</span>
               </div>
-              <VoiceButton onCommand={handleVoiceCommand} className="w-12 h-12" />
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 bg-emerald-500/10 px-3 py-2 rounded-full">
+                  <Battery size={16} className="text-emerald-500" />
+                  <span className="text-emerald-500 font-semibold">85%</span>
+                </div>
+                <VoiceButton onCommand={handleVoiceCommand} className="w-14 h-14" />
+              </div>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Main Dashboard */}
-      <main className="flex-1 px-4 py-2 relative z-10 widget-grid grid-cols-12 grid-rows-2 gap-4">
-        
-        {/* Urgent Notifications */}
-        {urgentNotifications.length > 0 && (
-          <section className="col-span-12 mb-4">
-            {urgentNotifications.slice(0, 1).map((notification) => (
-              <div key={notification.id} className="glass-card p-3 status-destructive">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-destructive rounded-full animate-pulse-glow"></div>
-                    <div>
-                      <span className="heading-sm text-destructive">{notification.title}</span>
-                      <p className="body-sm ml-2">{notification.message}</p>
-                    </div>
+      {/* Urgent Notifications */}
+      {urgentNotifications.length > 0 && (
+        <section className="mx-4 mb-4 relative z-10">
+          {urgentNotifications.slice(0, 1).map((notification) => (
+            <div key={notification.id} className="glass-card p-4 border-2 border-red-500/30 bg-red-500/5 backdrop-blur-xl">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                  <div>
+                    <span className="text-lg font-semibold text-red-500">{notification.title}</span>
+                    <p className="text-sm text-muted-foreground ml-2">{notification.message}</p>
                   </div>
-                  <button
-                    onClick={() => dismissAlert(notification.id)}
-                    className="touch-premium text-destructive/60 hover:text-destructive"
-                  >
-                    ✕
-                  </button>
                 </div>
+                <button
+                  onClick={() => dismissAlert(notification.id)}
+                  className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-red-500/20 text-red-500 transition-all"
+                >
+                  ✕
+                </button>
               </div>
-            ))}
-          </section>
-        )}
+            </div>
+          ))}
+        </section>
+      )}
 
-        {/* Draggable Widgets Grid */}
+      {/* Main Content Grid */}
+      <div className="mx-4 space-y-4 relative z-10">
+        
+        {/* Draggable Widgets Section */}
         <DndContext
           sensors={sensors}
           collisionDetection={closestCenter}
           onDragEnd={handleDragEnd}
         >
-          <section className="col-span-12 row-span-1">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="heading-lg">Dashboard</h2>
-              <div className="flex items-center gap-2">
+          <section className="glass-card p-6 backdrop-blur-xl border-2 border-white/20">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-foreground">Smart Dashboard</h2>
+              <div className="flex items-center gap-3">
                 <button
                   onClick={resetLayout}
-                  className="flex items-center gap-2 touch-premium glass-card px-3 py-2 text-muted-foreground hover:text-foreground transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 bg-muted/50 backdrop-blur-sm rounded-xl border border-white/10 hover:bg-muted transition-all"
                 >
-                  <RotateCcw size={14} />
-                  <span className="body-sm">Reset Layout</span>
+                  <RotateCcw size={16} />
+                  <span>Reset Layout</span>
                 </button>
-                <div className="flex items-center gap-2 glass-card px-3 py-2">
-                  <Settings size={14} className="text-primary" />
-                  <span className="body-sm text-primary">Drag to rearrange</span>
+                <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 backdrop-blur-sm rounded-xl border border-primary/20">
+                  <Settings size={16} className="text-primary" />
+                  <span className="text-primary font-medium">Drag to rearrange</span>
                 </div>
               </div>
             </div>
@@ -236,7 +243,7 @@ export const HomePage = () => {
               items={sortedWidgets.map(w => w.id)} 
               strategy={rectSortingStrategy}
             >
-              <div className="grid grid-cols-5 gap-4 h-32">
+              <div className="grid grid-cols-5 gap-6 h-40">
                 {sortedWidgets.map((widget) => (
                   <DraggableWidget 
                     key={widget.id} 
@@ -251,75 +258,109 @@ export const HomePage = () => {
           </section>
         </DndContext>
 
-        {/* Navigation & Deals */}
-        <section className="col-span-12 row-span-1 grid grid-cols-2 gap-4">
-          {/* Quick Routes */}
-          <div className="glass-card p-4">
-            <div className="flex items-center gap-2 mb-4">
-              <Route size={16} className="text-primary" />
-              <h3 className="heading-sm">Quick Routes</h3>
+        {/* Live Routes & Premium Services */}
+        <div className="grid grid-cols-2 gap-6">
+          
+          {/* Live Routes with Enhanced Design */}
+          <div className="glass-card p-6 backdrop-blur-xl border-2 border-blue-500/20 bg-gradient-to-br from-blue-500/5 to-cyan-500/5">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+                <Route size={20} className="text-white" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-foreground">Live Routes</h3>
+                <p className="text-sm text-muted-foreground">Real-time navigation</p>
+              </div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              {mockFrequentDestinations.slice(0, 4).map((destination) => (
-                <FrequentDestination 
+            
+            <div className="space-y-3">
+              {mockFrequentDestinations.slice(0, 3).map((destination, index) => (
+                <div 
                   key={destination.id} 
-                  destination={destination} 
-                  onNavigate={handleNavigate}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Exclusive Deals */}
-          <div className="glass-card p-4">
-            <div className="flex items-center gap-2 mb-4">
-              <Star size={16} className="text-success" />
-              <h3 className="heading-sm">Exclusive Deals</h3>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              {mockDiscountOffers.slice(0, 4).map((offer) => (
-                <div key={offer.id} className="surface-elevated p-3 rounded-xl hover:surface-primary transition-all cursor-pointer group">
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <h4 className="body-md text-foreground truncate group-hover:text-success transition-colors">
-                        {offer.restaurant}
-                      </h4>
-                      <span className="status-success px-2 py-1 rounded-lg body-sm font-semibold">
-                        {offer.offer}
-                      </span>
+                  className="p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:bg-white/10 transition-all cursor-pointer group"
+                  onClick={() => handleNavigate(destination)}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-400 to-cyan-400 flex items-center justify-center text-white text-sm font-bold">
+                        {index + 1}
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-foreground group-hover:text-blue-400 transition-colors">
+                          {destination.name}
+                        </h4>
+                        <p className="text-sm text-muted-foreground">{destination.address}</p>
+                      </div>
                     </div>
-                    <p className="body-sm truncate">{offer.description}</p>
-                    <div className="flex justify-between body-sm">
-                      <span className="truncate">{offer.validTill}</span>
-                      <span className="text-primary font-medium">{offer.distance}</span>
+                    <div className="text-right">
+                      <div className="text-sm font-semibold text-blue-400">{destination.eta}</div>
+                      <div className="text-xs text-muted-foreground">{destination.distance}</div>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-        </section>
-      </main>
 
-      {/* Map Footer */}
-      <footer className="relative z-10 mx-4 mb-4">
-        <div className="glass-card p-4">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <MapPin size={16} className="text-primary" />
-              <h3 className="heading-sm">Navigation</h3>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="body-sm flex items-center gap-2">
-                <TrendingUp size={12} className="text-success" />
-                <span className="text-success">Live Traffic</span>
+          {/* Premium Deals */}
+          <div className="glass-card p-6 backdrop-blur-xl border-2 border-emerald-500/20 bg-gradient-to-br from-emerald-500/5 to-green-500/5">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center">
+                <Star size={20} className="text-white" />
               </div>
-              <div className="body-sm">{suggestions.news}</div>
+              <div>
+                <h3 className="text-xl font-bold text-foreground">Premium Deals</h3>
+                <p className="text-sm text-muted-foreground">Exclusive offers</p>
+              </div>
+            </div>
+            
+            <div className="space-y-3">
+              {mockDiscountOffers.slice(0, 3).map((offer) => (
+                <div key={offer.id} className="p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:bg-white/10 transition-all cursor-pointer group">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-semibold text-foreground group-hover:text-emerald-400 transition-colors">
+                      {offer.restaurant}
+                    </h4>
+                    <span className="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-sm font-bold">
+                      {offer.offer}
+                    </span>
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-2">{offer.description}</p>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Valid: {offer.validTill}</span>
+                    <span className="text-emerald-400 font-medium">{offer.distance}</span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-          <MapWidget className="h-32 rounded-xl overflow-hidden" />
         </div>
-      </footer>
+
+        {/* Enhanced Map Section */}
+        <div className="glass-card p-6 backdrop-blur-xl border-2 border-purple-500/20 bg-gradient-to-br from-purple-500/5 to-pink-500/5 mb-4">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                <MapPin size={20} className="text-white" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-foreground">Smart Navigation</h3>
+                <p className="text-sm text-muted-foreground">AI-powered routing</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 px-3 py-2 bg-emerald-500/20 rounded-full">
+                <TrendingUp size={14} className="text-emerald-400" />
+                <span className="text-emerald-400 font-semibold">Live Traffic</span>
+              </div>
+              <div className="text-sm text-muted-foreground font-medium">{suggestions.news}</div>
+            </div>
+          </div>
+          <div className="rounded-2xl overflow-hidden border-2 border-white/10 shadow-xl">
+            <MapWidget className="h-48" />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
