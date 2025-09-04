@@ -1,37 +1,45 @@
 import { useState, useEffect } from 'react';
 import { 
-  Play, 
-  Pause, 
   MapPin, 
   Clock, 
-  Zap, 
-  AlertTriangle, 
   Route, 
-  Calendar, 
   Gauge, 
-  Navigation, 
-  Thermometer, 
-  Fuel, 
-  Shield,
-  Music,
-  Mic,
   Star,
   TrendingUp,
   Battery,
-  Signal
+  Signal,
+  RotateCcw,
+  Settings
 } from 'lucide-react';
+import { 
+  DndContext, 
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  rectSortingStrategy,
+} from '@dnd-kit/sortable';
 import { VoiceButton } from '@/components/ui/VoiceButton';
-import { TrafficAlert } from '@/components/ui/TrafficAlert';
 import { FrequentDestination } from '@/components/ui/FrequentDestination';
-import { ServiceCard } from '@/components/ui/ServiceCard';
 import { MapWidget } from '@/components/ui/MapWidget';
+import { DraggableWidget } from '@/components/ui/DraggableWidget';
+import { MusicWidget } from '@/components/widgets/MusicWidget';
+import { WeatherWidget } from '@/components/widgets/WeatherWidget';
+import { VoiceWidget } from '@/components/widgets/VoiceWidget';
+import { TrafficWidget } from '@/components/widgets/TrafficWidget';
+import { ServicesWidget } from '@/components/widgets/ServicesWidget';
+import { useLayoutPreferences } from '@/hooks/useLayoutPreferences';
 import { 
   getAISuggestions, 
   mockDriverProfile, 
   mockNotifications,
-  mockTrafficAlerts,
-  mockDriverServices,
-  mockWeatherData,
   mockFrequentDestinations,
   mockDiscountOffers
 } from '@/data/mockData';
@@ -40,6 +48,21 @@ export const HomePage = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentSong, setCurrentSong] = useState('Radio Mirchi Tamil');
+  const [dismissedAlerts, setDismissedAlerts] = useState<string[]>([]);
+  
+  const { layout, updateLayout, resetLayout } = useLayoutPreferences();
+
+  // Drag and drop sensors
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -54,17 +77,31 @@ export const HomePage = () => {
     return 'night';
   };
 
-  const [dismissedAlerts, setDismissedAlerts] = useState<string[]>([]);
   const suggestions = getAISuggestions(getTimeOfDay());
   const urgentNotifications = mockNotifications.filter(n => n.urgent && !dismissedAlerts.includes(n.id));
 
   const handleVoiceCommand = (command: string) => {
     console.log('Voice command received:', command);
-    // Simulate command processing
     if (command.toLowerCase().includes('play')) {
       setIsPlaying(true);
     } else if (command.toLowerCase().includes('pause')) {
       setIsPlaying(false);
+    }
+  };
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    
+    if (over && active.id !== over.id) {
+      const oldIndex = layout.findIndex(item => item.id === active.id);
+      const newIndex = layout.findIndex(item => item.id === over.id);
+      
+      const newLayout = arrayMove(layout, oldIndex, newIndex).map((item, index) => ({
+        ...item,
+        position: index,
+      }));
+      
+      updateLayout(newLayout);
     }
   };
 
@@ -74,14 +111,19 @@ export const HomePage = () => {
 
   const handleNavigate = (destination: any) => {
     console.log('Navigate to:', destination);
-    // Simulate navigation
   };
 
-  const handleVoiceAssistantCommand = (command: string) => {
-    console.log('Voice Assistant command:', command);
-    // Process voice commands
-    handleVoiceCommand(command);
+  // Widget components mapped by ID
+  const widgets = {
+    music: <MusicWidget isPlaying={isPlaying} currentSong={currentSong} onTogglePlay={() => setIsPlaying(!isPlaying)} />,
+    weather: <WeatherWidget />,
+    voice: <VoiceWidget onCommand={handleVoiceCommand} />,
+    traffic: <TrafficWidget />,
+    services: <ServicesWidget />,
   };
+
+  // Sort widgets by position
+  const sortedWidgets = layout.sort((a, b) => a.position - b.position);
 
   return (
     <div className="dashboard-grid bg-background relative overflow-hidden">
@@ -141,144 +183,73 @@ export const HomePage = () => {
       {/* Main Dashboard */}
       <main className="flex-1 px-4 py-2 relative z-10 widget-grid grid-cols-12 grid-rows-2 gap-4">
         
-        {/* Primary Control Center */}
-        <section className="col-span-8 row-span-1">
-          {/* Urgent Notifications */}
-          {urgentNotifications.length > 0 && (
-            <div className="mb-4">
-              {urgentNotifications.slice(0, 1).map((notification) => (
-                <div key={notification.id} className="glass-card p-3 status-destructive">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-2 h-2 bg-destructive rounded-full animate-pulse-glow"></div>
-                      <div>
-                        <span className="heading-sm text-destructive">{notification.title}</span>
-                        <p className="body-sm ml-2">{notification.message}</p>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => dismissAlert(notification.id)}
-                      className="touch-premium text-destructive/60 hover:text-destructive"
-                    >
-                      ✕
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Main Controls Grid */}
-          <div className="grid grid-cols-3 gap-4 h-28">
-            {/* Music Control */}
-            <div className="glass-card p-4 flex items-center gap-4 status-info">
-              <button
-                onClick={() => setIsPlaying(!isPlaying)}
-                className="w-16 h-16 rounded-2xl automotive-button-primary flex items-center justify-center group"
-              >
-                {isPlaying ? (
-                  <Pause size={20} className="text-primary-foreground group-hover:scale-110 transition-transform" />
-                ) : (
-                  <Play size={20} className="text-primary-foreground group-hover:scale-110 transition-transform ml-1" />
-                )}
-              </button>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
-                  <Music size={14} className="text-info" />
-                  <span className="body-sm text-info">Now Playing</span>
-                </div>
-                <h3 className="heading-sm truncate">{currentSong}</h3>
-                <div className="flex items-center gap-2 mt-2">
-                  <div className="h-1 bg-info/20 rounded-full flex-1">
-                    <div className="h-1 bg-info rounded-full w-1/3"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Weather Control */}
-            <div className="glass-card p-4 flex items-center gap-4 status-warning">
-              <div className="w-16 h-16 rounded-2xl surface-elevated flex items-center justify-center text-3xl">
-                {mockWeatherData.current.icon}
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-1">
-                  <Thermometer size={14} className="text-warning" />
-                  <span className="body-sm text-warning">Weather</span>
-                </div>
-                <h3 className="heading-sm">{mockWeatherData.current.temperature}</h3>
-                <p className="body-sm">{mockWeatherData.current.condition}</p>
-                <p className="body-sm text-warning font-medium">{mockWeatherData.current.drivingCondition}</p>
-              </div>
-            </div>
-
-            {/* Voice Assistant */}
-            <div className="glass-card p-4 flex flex-col items-center justify-center gap-3 status-success">
-              <VoiceButton onCommand={handleVoiceAssistantCommand} className="w-16 h-16 animate-float" />
-              <div className="text-center">
-                <div className="flex items-center gap-2 justify-center mb-1">
-                  <Mic size={14} className="text-success" />
-                  <span className="body-sm text-success">Assistant</span>
-                </div>
-                <p className="body-sm">Tap to speak</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Traffic & Services */}
-        <aside className="col-span-4 row-span-1 grid grid-rows-2 gap-4">
-          {/* Traffic Status */}
-          <div className="glass-card p-3">
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center gap-2">
-                <Navigation size={14} className="text-warning" />
-                <h3 className="body-md font-semibold">Road Status</h3>
-              </div>
-              <span className="body-sm text-muted-foreground">{mockTrafficAlerts.length} alerts</span>
-            </div>
-            {/* Show only the most critical alert */}
-            {mockTrafficAlerts.length > 0 && (
-              <div className="flex items-center gap-3 p-2 rounded-lg surface-elevated">
-                <div className="text-lg">{mockTrafficAlerts[0].icon}</div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="body-sm font-medium truncate">{mockTrafficAlerts[0].title}</h4>
-                  <div className="flex items-center gap-3 body-xs text-muted-foreground">
-                    <span>{mockTrafficAlerts[0].distance}</span>
-                    <span className="text-warning font-medium">{mockTrafficAlerts[0].eta}</span>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Quick Services */}
-          <div className="glass-card p-3">
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center gap-2">
-                <Shield size={14} className="text-success" />
-                <h3 className="body-md font-semibold">Services</h3>
-              </div>
-              <span className="body-sm text-muted-foreground">{mockDriverServices.length} nearby</span>
-            </div>
-            {/* Show only the closest/best service */}
-            {mockDriverServices.length > 0 && (
-              <div className="flex items-center gap-3 p-2 rounded-lg surface-elevated">
-                <div className="text-lg">{mockDriverServices[0].icon}</div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="body-sm font-medium truncate">{mockDriverServices[0].name}</h4>
-                  <div className="flex items-center justify-between body-xs">
-                    <span className="text-muted-foreground">{mockDriverServices[0].distance}</span>
-                    <div className="flex items-center gap-1">
-                      <Star size={10} className="text-yellow-500 fill-current" />
-                      <span>{mockDriverServices[0].rating}</span>
+        {/* Urgent Notifications */}
+        {urgentNotifications.length > 0 && (
+          <section className="col-span-12 mb-4">
+            {urgentNotifications.slice(0, 1).map((notification) => (
+              <div key={notification.id} className="glass-card p-3 status-destructive">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 bg-destructive rounded-full animate-pulse-glow"></div>
+                    <div>
+                      <span className="heading-sm text-destructive">{notification.title}</span>
+                      <p className="body-sm ml-2">{notification.message}</p>
                     </div>
                   </div>
+                  <button
+                    onClick={() => dismissAlert(notification.id)}
+                    className="touch-premium text-destructive/60 hover:text-destructive"
+                  >
+                    ✕
+                  </button>
                 </div>
               </div>
-            )}
-          </div>
-        </aside>
+            ))}
+          </section>
+        )}
+
+        {/* Draggable Widgets Grid */}
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <section className="col-span-12 row-span-1">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="heading-lg">Dashboard</h2>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={resetLayout}
+                  className="flex items-center gap-2 touch-premium glass-card px-3 py-2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <RotateCcw size={14} />
+                  <span className="body-sm">Reset Layout</span>
+                </button>
+                <div className="flex items-center gap-2 glass-card px-3 py-2">
+                  <Settings size={14} className="text-primary" />
+                  <span className="body-sm text-primary">Drag to rearrange</span>
+                </div>
+              </div>
+            </div>
+            
+            <SortableContext 
+              items={sortedWidgets.map(w => w.id)} 
+              strategy={rectSortingStrategy}
+            >
+              <div className="grid grid-cols-5 gap-4 h-32">
+                {sortedWidgets.map((widget) => (
+                  <DraggableWidget 
+                    key={widget.id} 
+                    id={widget.id}
+                    className="h-full"
+                  >
+                    {widgets[widget.id as keyof typeof widgets]}
+                  </DraggableWidget>
+                ))}
+              </div>
+            </SortableContext>
+          </section>
+        </DndContext>
 
         {/* Navigation & Deals */}
         <section className="col-span-12 row-span-1 grid grid-cols-2 gap-4">
