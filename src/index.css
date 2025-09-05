@@ -101,6 +101,7 @@
     --ring: 221.2 83.2% 53.3%;
   --shadow-neuro-raised: 8px 8px 16px rgba(0,0,0,0.1), -8px -8px 16px rgba(255,255,255,0.8);
 }
+}
 
 @layer base {
   * {
