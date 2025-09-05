@@ -224,8 +224,8 @@ export const HomePage = () => {
         {/* Unified Control Center */}
         <div className="grid grid-cols-12 gap-6">
           
-          {/* Smart Dashboard Widgets - Compact */}
-          <div className="col-span-8">
+          {/* Smart Dashboard Widgets - Full Width */}
+          <div className="col-span-12">
             <DndContext
               sensors={sensors}
               collisionDetection={closestCenter}
@@ -267,36 +267,6 @@ export const HomePage = () => {
                 </SortableContext>
               </div>
             </DndContext>
-          </div>
-
-          {/* AI Insights Panel */}
-          <div className="col-span-4">
-            <div className="glass-card backdrop-blur-2xl border border-white/10 p-6 rounded-3xl h-full" 
-                 style={{ background: 'var(--gradient-glass)', boxShadow: 'var(--shadow-glass)' }}>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-info to-primary flex items-center justify-center">
-                  <TrendingUp size={20} className="text-white" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-foreground">AI Insights</h3>
-                  <p className="text-sm text-muted-foreground">Real-time analytics</p>
-                </div>
-              </div>
-              <div className="space-y-3">
-                <div className="p-3 bg-success/10 border border-success/20 rounded-xl">
-                  <div className="text-sm font-medium text-success">Traffic Status</div>
-                  <div className="text-xs text-success/80">Optimal routes available</div>
-                </div>
-                <div className="p-3 bg-info/10 border border-info/20 rounded-xl">
-                  <div className="text-sm font-medium text-info">Fuel Efficiency</div>
-                  <div className="text-xs text-info/80">+12% improvement today</div>
-                </div>
-                <div className="p-3 bg-warning/10 border border-warning/20 rounded-xl">
-                  <div className="text-sm font-medium text-warning">AI Suggestion</div>
-                  <div className="text-xs text-warning/80">{suggestions.news}</div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 

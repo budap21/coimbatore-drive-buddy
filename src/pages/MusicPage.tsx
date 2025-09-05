@@ -58,7 +58,7 @@ export const MusicPage = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-background to-surface p-4 space-y-6">
       {/* Header */}
       <div className="flex justify-between items-center">
         <h1 className="text-car-title">Music Hub</h1>
@@ -67,7 +67,7 @@ export const MusicPage = () => {
 
       {/* Now Playing Bar */}
       {currentlyPlaying && (
-        <NeuroCard className="bg-gradient-to-r from-primary/20 to-primary-glow/20 border border-primary/30">
+        <NeuroCard className="glass-card bg-gradient-to-r from-primary/10 to-primary-glow/10 border border-primary/20">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center">
@@ -125,7 +125,7 @@ export const MusicPage = () => {
         <div className="space-y-4">
           {/* Search and Filters */}
           <div className="space-y-4">
-            <NeuroCard variant="inset">
+            <NeuroCard variant="inset" className="glass-card">
               <div className="flex items-center gap-3">
                 <Search size={20} className="text-muted-foreground" />
                 <input
@@ -172,7 +172,7 @@ export const MusicPage = () => {
               />
             ) : (
               filteredSongs.map((song) => (
-              <NeuroCard key={song.id} className="hover:scale-105 cursor-pointer">
+              <NeuroCard key={song.id} className="glass-card hover:scale-105 cursor-pointer">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
                     <button
@@ -218,7 +218,7 @@ export const MusicPage = () => {
         <div className="space-y-4">
           <h2 className="text-car-subtitle">Live FM Stations</h2>
           {mockFMStations.map((station) => (
-            <NeuroCard key={station.id} className="hover:scale-105 cursor-pointer">
+            <NeuroCard key={station.id} className="glass-card hover:scale-105 cursor-pointer">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="neuro-button-primary p-3 rounded-full">
@@ -250,7 +250,7 @@ export const MusicPage = () => {
         <div className="space-y-4">
           <h2 className="text-car-subtitle">Your Playlists</h2>
           
-          <NeuroCard className="hover:scale-105 cursor-pointer">
+          <NeuroCard className="glass-card hover:scale-105 cursor-pointer">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center">
                 <Heart size={24} className="text-white" />
@@ -262,7 +262,7 @@ export const MusicPage = () => {
             </div>
           </NeuroCard>
 
-          <NeuroCard className="hover:scale-105 cursor-pointer">
+          <NeuroCard className="glass-card hover:scale-105 cursor-pointer">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-warning to-success flex items-center justify-center">
                 <Volume2 size={24} className="text-white" />

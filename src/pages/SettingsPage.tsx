@@ -104,9 +104,9 @@ export const SettingsPage = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-background to-surface p-4 space-y-6">
       {/* User Profile with Driver Points */}
-      <NeuroCard className="bg-gradient-to-r from-primary/20 to-accent/20 border-primary/30">
+      <NeuroCard className="glass-card bg-gradient-to-r from-primary/10 to-accent/10 border-primary/20">
         <div className="space-y-4">
           <div className="flex items-center gap-4">
             <div className="p-3 rounded-full bg-primary/20">
@@ -148,7 +148,7 @@ export const SettingsPage = () => {
           
           <div className="space-y-2">
             {section.items.map((item, itemIndex) => (
-              <NeuroCard key={itemIndex}>
+              <NeuroCard key={itemIndex} className="glass-card">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <h4 className="font-medium">{item.label}</h4>
@@ -183,7 +183,7 @@ export const SettingsPage = () => {
       ))}
 
       {/* Help & Support */}
-      <NeuroCard className="hover:scale-105 cursor-pointer">
+      <NeuroCard className="glass-card hover:scale-105 cursor-pointer">
         <div className="flex items-center gap-3">
           <HelpCircle className="text-accent" size={20} />
           <div>

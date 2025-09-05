@@ -306,6 +306,7 @@ export const mockTrafficAlerts = [
 ];
 
 export const mockDriverServices = [
+  // Petrol Stations
   {
     id: '1',
     type: 'fuel' as const,
@@ -319,9 +320,101 @@ export const mockDriverServices = [
   },
   {
     id: '2',
+    type: 'fuel' as const,
+    name: 'HP Petrol Station',
+    distance: '1.2 km',
+    price: '₹102.38/L',
+    offers: 'Free air check & car wash',
+    availability: 'Open 24/7',
+    rating: 4.0,
+    icon: '⛽'
+  },
+  {
+    id: '3',
+    type: 'fuel' as const,
+    name: 'Bharat Petroleum',
+    distance: '1.8 km',
+    price: '₹102.42/L',
+    offers: '10% off with BPCL card',
+    availability: 'Open 6 AM - 11 PM',
+    rating: 4.1,
+    icon: '⛽'
+  },
+  {
+    id: '4',
+    type: 'fuel' as const,
+    name: 'Shell Petrol Pump',
+    distance: '2.1 km',
+    price: '₹103.15/L',
+    offers: 'Premium fuel quality',
+    availability: 'Open 24/7',
+    rating: 4.3,
+    icon: '⛽'
+  },
+  
+  // EV Charging Stations
+  {
+    id: '5',
+    type: 'ev-charging' as const,
+    name: 'Ather Grid Charging',
+    distance: '0.6 km',
+    price: '₹8/kWh',
+    offers: 'Fast charging in 30 min',
+    availability: 'Open 24/7',
+    rating: 4.5,
+    icon: '🔌'
+  },
+  {
+    id: '6',
+    type: 'ev-charging' as const,
+    name: 'Tata Power Charging Hub',
+    distance: '1.4 km',
+    price: '₹12/kWh',
+    offers: 'Multiple connector types',
+    availability: 'Open 24/7',
+    rating: 4.4,
+    icon: '⚡'
+  },
+  {
+    id: '7',
+    type: 'ev-charging' as const,
+    name: 'ChargeZone Station',
+    distance: '2.0 km',
+    price: '₹10/kWh',
+    offers: 'Mobile app monitoring',
+    availability: 'Open 6 AM - 10 PM',
+    rating: 4.2,
+    icon: '🔋'
+  },
+  
+  // Tyre Pressure & Puncture Shops
+  {
+    id: '8',
+    type: 'tyre-pressure' as const,
+    name: 'MRF Tyre Care Center',
+    distance: '0.5 km',
+    price: '₹20 air check',
+    offers: 'Free pressure check',
+    availability: 'Open 6 AM - 10 PM',
+    rating: 4.3,
+    icon: '🛞'
+  },
+  {
+    id: '9',
+    type: 'tyre-pressure' as const,
+    name: 'Apollo Tyres Service',
+    distance: '1.1 km',
+    price: '₹50-₹200',
+    offers: 'Tyre rotation service',
+    availability: 'Open 8 AM - 8 PM',
+    rating: 4.4,
+    icon: '🛞'
+  },
+  {
+    id: '10',
     type: 'puncture' as const,
     name: 'Quick Fix Puncture Shop',
-    distance: '0.5 km',
+    distance: '0.7 km',
     price: '₹50-₹150',
     offers: 'Emergency service available',
     availability: 'Open 6 AM - 10 PM',
@@ -329,7 +422,31 @@ export const mockDriverServices = [
     icon: '🔧'
   },
   {
-    id: '3',
+    id: '11',
+    type: 'puncture' as const,
+    name: 'Road Side Tyre Care',
+    distance: '2.3 km',
+    price: '₹40-₹120',
+    offers: '24/7 emergency service',
+    availability: 'Open 24/7',
+    rating: 3.9,
+    icon: '🔧'
+  },
+  {
+    id: '12',
+    type: 'tyre-pressure' as const,
+    name: 'Bridgestone Service Center',
+    distance: '1.9 km',
+    price: '₹100-₹300',
+    offers: 'Computerized wheel balancing',
+    availability: 'Open 9 AM - 7 PM',
+    rating: 4.5,
+    icon: '⚙️'
+  },
+
+  // Other Services
+  {
+    id: '13',
     type: 'service' as const,
     name: 'Maruti Service Center',
     distance: '1.8 km',
@@ -340,7 +457,7 @@ export const mockDriverServices = [
     icon: '🔧'
   },
   {
-    id: '4',
+    id: '14',
     type: 'wash' as const,
     name: 'Auto Spa Car Wash',
     distance: '1.1 km',
@@ -349,28 +466,6 @@ export const mockDriverServices = [
     availability: 'Open 8 AM - 8 PM',
     rating: 4.3,
     icon: '🚿'
-  },
-  {
-    id: '5',
-    type: 'fuel' as const,
-    name: 'HP Petrol Bunk',
-    distance: '1.2 km',
-    price: '₹102.38/L',
-    offers: 'Free air check',
-    availability: 'Open till 10 PM',
-    rating: 4.0,
-    icon: '⛽'
-  },
-  {
-    id: '6',
-    type: 'puncture' as const,
-    name: 'Road Side Tyre Care',
-    distance: '2.3 km',
-    price: '₹40-₹120',
-    offers: '24/7 emergency service',
-    availability: 'Open 24/7',
-    rating: 3.9,
-    icon: '🛞'
   }
 ];
 

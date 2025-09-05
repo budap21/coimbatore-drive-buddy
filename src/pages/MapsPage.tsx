@@ -23,9 +23,9 @@ export const MapsPage = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-background to-surface p-4 space-y-6">
       {/* Current Location & Navigation */}
-      <NeuroCard className="bg-gradient-to-r from-primary/20 to-accent/20 border-primary/30">
+      <NeuroCard className="glass-card bg-gradient-to-r from-primary/10 to-accent/10 border-primary/20">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-full bg-primary/20">
@@ -43,7 +43,7 @@ export const MapsPage = () => {
       </NeuroCard>
 
       {/* Search */}
-      <NeuroCard>
+      <NeuroCard className="glass-card">
         <div className="space-y-4">
           <div className="flex items-center gap-2">
             <Search size={20} className="text-muted-foreground" />
@@ -58,7 +58,7 @@ export const MapsPage = () => {
       </NeuroCard>
 
       {/* Map Placeholder */}
-      <NeuroCard className="h-64">
+      <NeuroCard className="glass-card h-64">
         <div className="w-full h-full bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg relative overflow-hidden">
           {/* Detailed Coimbatore Map Mock */}
           <div className="absolute inset-0 bg-green-50/50">
@@ -116,7 +116,7 @@ export const MapsPage = () => {
         <h2 className="text-car-subtitle">Quick Destinations</h2>
         <div className="grid grid-cols-1 gap-3">
           {quickDestinations.map((dest, index) => (
-            <NeuroCard key={index} className="hover:scale-105 cursor-pointer">
+            <NeuroCard key={index} className="glass-card hover:scale-105 cursor-pointer">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="p-2 rounded-full bg-accent/20">
@@ -150,7 +150,7 @@ export const MapsPage = () => {
         <h2 className="text-car-subtitle">Recent Searches</h2>
         <div className="space-y-2">
           {recentSearches.map((search, index) => (
-            <NeuroCard key={index} className="hover:scale-105 cursor-pointer">
+            <NeuroCard key={index} className="glass-card hover:scale-105 cursor-pointer">
               <div className="flex items-center gap-3">
                 <Clock size={16} className="text-muted-foreground" />
                 <span className="text-car-body">{search}</span>
