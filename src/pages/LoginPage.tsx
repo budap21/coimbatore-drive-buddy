@@ -8,34 +8,17 @@ interface LoginPageProps {
 }
 
 export const LoginPage = ({ onLogin }: LoginPageProps) => {
-  const [step, setStep] = useState<'phone' | 'otp'>('phone');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handlePhoneSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (phoneNumber.length === 10) {
-      setLoading(true);
-      // Simulate API call
-      setTimeout(() => {
-        setLoading(false);
-        setStep('otp');
-      }, 1500);
-    }
-  };
-
-  const handleOtpSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (otp === '1234') { // Hardcoded OTP
-      setLoading(true);
-      setTimeout(() => {
-        onLogin({
-          name: 'Test User 1',
-          phone: phoneNumber
-        });
-      }, 1000);
-    }
+  const handleQuickLogin = () => {
+    setLoading(true);
+    // Quick professional login since PIN authentication is already handled
+    setTimeout(() => {
+      onLogin({
+        name: 'Professional Driver',
+        phone: '+91-XXXX-XXXX'
+      });
+    }, 800);
   };
 
   return (
@@ -66,90 +49,45 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
 
         <div className="login-form">
           <NeuroCard className="neuro-card hover-glow">
-            {step === 'phone' ? (
-              <form onSubmit={handlePhoneSubmit} className="space-y-6">
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium">Phone Number</label>
-                  <div className="flex rounded-lg overflow-hidden">
-                    <div className="flex items-center px-4 py-3 bg-muted/50 text-muted-foreground border border-input">
-                      +91
-                    </div>
-                    <Input
-                      type="tel"
-                      value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                      placeholder="9876543210"
-                      className="rounded-l-none border-l-0 py-3"
-                      required
-                    />
-                  </div>
+            <div className="space-y-6 text-center">
+              <div className="space-y-3">
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                  Professional Access
+                </h2>
+                <p className="text-muted-foreground">
+                  PIN authentication enabled for secure access
+                </p>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="flex items-center justify-center gap-3 p-4 bg-success/10 border border-success/30 rounded-lg">
+                  <div className="w-3 h-3 bg-success rounded-full animate-pulse"></div>
+                  <span className="text-success font-medium">Secure PIN Authentication Active</span>
                 </div>
+                
                 <button 
-                  type="submit" 
-                  className={`w-full neuro-button-primary py-3 font-medium transition-all duration-300 ${
-                    phoneNumber.length !== 10 || loading 
-                      ? 'opacity-50 cursor-not-allowed' 
-                      : 'hover:scale-105'
+                  onClick={handleQuickLogin}
+                  className={`w-full neuro-button-primary py-4 font-medium transition-all duration-300 ${
+                    loading 
+                      ? 'opacity-75 cursor-not-allowed' 
+                      : 'hover:scale-105 hover:shadow-glow'
                   }`}
-                  disabled={phoneNumber.length !== 10 || loading}
+                  disabled={loading}
                 >
                   {loading ? (
                     <div className="flex items-center justify-center gap-2">
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                      Sending OTP...
+                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                      Accessing Dashboard...
                     </div>
-                  ) : 'Send OTP'}
+                  ) : (
+                    <div className="flex items-center justify-center gap-2">
+                      <span>🔐</span>
+                      <span>Continue to Dashboard</span>
+                    </div>
+                  )}
                 </button>
-              </form>
-            ) : (
-              <form onSubmit={handleOtpSubmit} className="space-y-6">
-                <div className="space-y-3">
-                  <label className="block text-sm font-medium">Enter OTP</label>
-                  <div className="text-center">
-                    <p className="text-sm text-muted-foreground mb-4">
-                      Code sent to <span className="text-primary font-medium">+91 {phoneNumber}</span>
-                    </p>
-                    <Input
-                      type="text"
-                      value={otp}
-                      onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 4))}
-                      placeholder="0000"
-                      className="text-center text-2xl tracking-[0.5em] font-bold py-4"
-                      maxLength={4}
-                      required
-                    />
-                    <div className="mt-3 p-3 bg-warning/10 border border-warning/30 rounded-lg">
-                      <p className="text-sm text-warning">💡 Demo OTP: <span className="font-bold">1234</span></p>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex gap-3">
-                  <button 
-                    type="button" 
-                    onClick={() => setStep('phone')}
-                    className="flex-1 neuro-button py-3 transition-all duration-300 hover:scale-105"
-                  >
-                    ← Back
-                  </button>
-                  <button 
-                    type="submit" 
-                    className={`flex-1 neuro-button-primary py-3 font-medium transition-all duration-300 ${
-                      otp.length !== 4 || loading 
-                        ? 'opacity-50 cursor-not-allowed' 
-                        : 'hover:scale-105'
-                    }`}
-                    disabled={otp.length !== 4 || loading}
-                  >
-                    {loading ? (
-                      <div className="flex items-center justify-center gap-2">
-                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                        Verifying...
-                      </div>
-                    ) : 'Verify'}
-                  </button>
-                </div>
-              </form>
-            )}
+              </div>
+            </div>
           </NeuroCard>
         </div>
       </div>

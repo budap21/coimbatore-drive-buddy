@@ -7,57 +7,78 @@
 /* DriverHub Design System - Enhanced with Animations */
 
 @layer base {
-  :root {
-    /* Monochromatic Theme - Dark */
-    --background: 0 0% 8%;
-    --foreground: 0 0% 95%;
-    
-    /* Primary Colors - Minimal Blue Accent */
-    --primary: 220 70% 50%;
-    --primary-foreground: 0 0% 98%;
-    --primary-glow: 220 70% 60%;
-    
-    /* Neumorphic Grays */
-    --neuro-dark: 0 0% 5%;
-    --neuro-light: 0 0% 12%;
-    --neuro-border: 0 0% 18%;
-    
-    /* Card Colors */
-    --card: 0 0% 10%;
-    --card-foreground: 0 0% 95%;
-    
-    /* Secondary Colors - Monochromatic */
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 90%;
-    --accent: 0 0% 25%;
-    --accent-foreground: 0 0% 95%;
-    
-    /* Minimal Status Colors */
-    --success: 120 30% 45%;
-    --success-foreground: 0 0% 98%;
-    --warning: 45 50% 50%;
-    --warning-foreground: 0 0% 10%;
-    --destructive: 0 40% 50%;
-    --destructive-foreground: 0 0% 98%;
-    --info: 200 30% 50%;
-    --info-foreground: 0 0% 98%;
-    
-    /* Muted Grays */
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
-    
-    /* Border and Input */
-    --border: 220 13% 20%;
-    --input: 220 13% 20%;
-    --ring: 220 91% 60%;
-    
-    /* Enhanced Gradients - Automotive */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--primary) / 0.05));
-    --gradient-accent: linear-gradient(135deg, hsl(var(--accent) / 0.1), hsl(var(--primary) / 0.05));
-    --gradient-hero: linear-gradient(135deg, hsl(var(--background)), hsl(var(--card)));
-    --gradient-neuro: linear-gradient(145deg, hsl(var(--neuro-light)), hsl(var(--neuro-dark)));
-    --gradient-dashboard: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--card)) 50%, hsl(var(--background)) 100%);
+:root {
+  /* Professional Blue-Gray Theme with Subtle Accents */
+  --background: 215 28% 17%;
+  --foreground: 210 20% 94%;
 
+  /* Premium card colors */
+  --card: 216 25% 21%;
+  --card-foreground: 210 18% 92%;
+
+  /* Sophisticated secondary palette */
+  --secondary: 214 22% 25%;
+  --secondary-foreground: 210 16% 90%;
+
+  /* Professional status colors */
+  --success: 134 61% 41%;
+  --success-foreground: 355 7% 97%;
+  --warning: 32 95% 44%;
+  --warning-foreground: 48 96% 89%;
+  --info: 204 94% 65%;
+  --info-foreground: 210 20% 98%;
+
+  /* Refined muted tones */
+  --muted: 216 20% 28%;
+  --muted-foreground: 215 10% 62%;
+
+  /* Enhanced borders and inputs */
+  --border: 216 18% 32%;
+  --input: 216 16% 35%;
+  --ring: 204 94% 65%;
+
+  /* Premium primary colors - Professional Blue */
+  --primary: 204 94% 65%;
+  --primary-foreground: 210 20% 98%;
+  --primary-glow: 204 100% 72%;
+
+  /* Modern accent - Teal */
+  --accent: 172 66% 50%;
+  --accent-foreground: 210 20% 98%;
+
+  /* Professional destructive */
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 20% 98%;
+
+  /* Premium neumorphic tones */
+  --neuro-dark: 218 28% 15%;
+  --neuro-light: 216 22% 28%;
+  --neuro-border: 216 18% 35%;
+
+  --radius: 1.2rem;
+
+  /* Premium gradients */
+  --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+  --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--muted)));
+  --gradient-hero: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--card)) 50%, hsl(var(--primary) / 0.1) 100%);
+  --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(var(--secondary)));
+  --gradient-glass: linear-gradient(145deg, hsla(var(--card), 0.8), hsla(var(--secondary), 0.6));
+  --gradient-mesh: radial-gradient(circle at 20% 50%, hsl(var(--primary) / 0.3) 0%, transparent 50%), 
+                   radial-gradient(circle at 80% 20%, hsl(var(--accent) / 0.3) 0%, transparent 50%), 
+                   radial-gradient(circle at 40% 80%, hsl(var(--success) / 0.2) 0%, transparent 50%);
+  
+  /* Professional shadows */
+  --shadow-neuro-inset: inset 8px 8px 16px hsl(var(--neuro-dark)), inset -8px -8px 16px hsl(var(--neuro-light));
+  --shadow-neuro-raised: 8px 8px 16px hsl(var(--neuro-dark)), -8px -8px 16px hsl(var(--neuro-light));
+  --shadow-elegant: 0 32px 64px -12px hsl(var(--primary) / 0.4);
+  --shadow-glow: 0 0 60px hsl(var(--primary-glow) / 0.6);
+  --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+
+  /* Fluid transitions */
+  --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-glass: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
     /* Enhanced Shadows - Subtle */
     --shadow-neuro-raised: 4px 4px 12px hsl(var(--neuro-dark) / 0.3), -2px -2px 8px hsl(var(--neuro-light) / 0.1);
     --shadow-neuro-inset: inset 2px 2px 8px hsl(var(--neuro-dark) / 0.2), inset -2px -2px 6px hsl(var(--neuro-light) / 0.05);
@@ -228,8 +249,11 @@
 
   /* Glass morphism effects */
   .glass-card {
-    @apply bg-card/90 backdrop-blur-md border-2 border-border/80 rounded-2xl;
-    box-shadow: var(--shadow-elegant);
+    @apply backdrop-blur-xl bg-gradient-to-br from-card/80 via-card/60 to-secondary/40;
+    border: 2px solid hsla(var(--border), 0.8);
+    box-shadow: var(--shadow-glass);
+    border-radius: var(--radius);
+    transition: var(--transition-glass);
   }
 }
 

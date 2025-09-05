@@ -127,60 +127,66 @@ export const HomePage = () => {
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Enhanced Ambient Background with Mirror Effects */}
-      <div className="fixed inset-0 opacity-40">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-secondary/10"></div>
-        <div className="absolute inset-0 bg-gradient-to-tr from-accent/5 via-transparent to-primary/5"></div>
-        <div className="absolute top-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+      {/* Revolutionary Mesh Background */}
+      <div className="fixed inset-0 opacity-50">
+        <div className="absolute inset-0" style={{ background: 'var(--gradient-mesh)' }}></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-accent/8"></div>
+        <div className="absolute top-1/4 left-1/3 w-72 h-72 bg-gradient-to-r from-primary/10 to-accent/10 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-gradient-to-l from-success/8 to-info/8 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }}></div>
       </div>
 
-      {/* Premium Header with Mirror Effect */}
-      <header className="relative z-10 m-4">
-        <div className="glass-card p-6 backdrop-blur-xl border-2 border-white/20 shadow-2xl">
+      {/* Ultra Modern Floating Header */}
+      <header className="relative z-10 m-6">
+        <div className="glass-card backdrop-blur-2xl border border-white/10 p-8 rounded-3xl" 
+             style={{ background: 'var(--gradient-glass)', boxShadow: 'var(--shadow-glass)' }}>
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center shadow-lg">
-                  <Gauge size={24} className="text-white" />
+            <div className="flex items-center gap-6">
+              <div className="relative">
+                <div className="w-16 h-16 rounded-3xl bg-gradient-to-br from-primary via-accent to-success flex items-center justify-center shadow-lg">
+                  <Gauge size={28} className="text-white" />
                 </div>
-                <div>
-                  <h1 className="text-3xl font-bold bg-gradient-to-r from-primary via-primary-glow to-primary bg-clip-text text-transparent">
-                    DriverHub
-                  </h1>
-                  <div className="flex items-center gap-6 text-sm text-muted-foreground mt-1">
-                    <div className="flex items-center gap-2">
-                      <Clock size={14} />
-                      <span>{currentTime.toLocaleTimeString('en-IN', { 
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-success to-accent rounded-full animate-pulse"></div>
+              </div>
+              <div className="space-y-2">
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-primary via-accent to-success bg-clip-text text-transparent">
+                  DriverHub Pro
+                </h1>
+                <div className="flex items-center gap-8 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2 bg-primary/10 px-3 py-1 rounded-full">
+                    <Clock size={14} className="text-primary" />
+                    <span className="text-primary font-medium">
+                      {currentTime.toLocaleTimeString('en-IN', { 
                         hour: '2-digit', 
                         minute: '2-digit',
                         hour12: true 
-                      })}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <MapPin size={14} />
-                      <span>Coimbatore, TN</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Signal size={14} className="text-emerald-500" />
-                      <span className="text-emerald-500 font-medium">Live Connected</span>
-                    </div>
+                      })}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-accent/10 px-3 py-1 rounded-full">
+                    <MapPin size={14} className="text-accent" />
+                    <span className="text-accent font-medium">Coimbatore, TN</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-success/10 px-3 py-1 rounded-full">
+                    <Signal size={14} className="text-success" />
+                    <span className="text-success font-medium">5G Connected</span>
                   </div>
                 </div>
               </div>
             </div>
             
-            <div className="flex items-center gap-6">
-              <div className="text-lg">
-                Good <span className="text-primary font-semibold">{getTimeOfDay()}</span>, 
-                <span className="text-foreground font-bold ml-1">{mockDriverProfile.name}</span>
+            <div className="flex items-center gap-8">
+              <div className="text-right space-y-1">
+                <div className="text-2xl font-bold">
+                  Good <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{getTimeOfDay()}</span>
+                </div>
+                <div className="text-lg text-foreground/80">{mockDriverProfile.name}</div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2 bg-emerald-500/10 px-3 py-2 rounded-full">
-                  <Battery size={16} className="text-emerald-500" />
-                  <span className="text-emerald-500 font-semibold">85%</span>
+                <div className="flex items-center gap-2 bg-success/15 px-4 py-3 rounded-2xl border border-success/20">
+                  <Battery size={18} className="text-success" />
+                  <span className="text-success font-bold text-lg">85%</span>
                 </div>
-                <VoiceButton onCommand={handleVoiceCommand} className="w-14 h-14" />
+                <VoiceButton onCommand={handleVoiceCommand} className="w-16 h-16 shadow-lg hover:shadow-glow" />
               </div>
             </div>
           </div>
@@ -212,152 +218,217 @@ export const HomePage = () => {
         </section>
       )}
 
-      {/* Main Content Grid */}
-      <div className="mx-4 space-y-4 relative z-10">
+      {/* Revolutionary Layout - No Waste Space */}
+      <div className="mx-6 space-y-6 relative z-10">
         
-        {/* Draggable Widgets Section */}
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
-        >
-          <section className="glass-card p-6 backdrop-blur-xl border-2 border-white/20">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-foreground">Smart Dashboard</h2>
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={resetLayout}
-                  className="flex items-center gap-2 px-4 py-2 bg-muted/50 backdrop-blur-sm rounded-xl border border-white/10 hover:bg-muted transition-all"
-                >
-                  <RotateCcw size={16} />
-                  <span>Reset Layout</span>
-                </button>
-                <div className="flex items-center gap-2 px-4 py-2 bg-primary/10 backdrop-blur-sm rounded-xl border border-primary/20">
-                  <Settings size={16} className="text-primary" />
-                  <span className="text-primary font-medium">Drag to rearrange</span>
-                </div>
-              </div>
-            </div>
-            
-            <SortableContext 
-              items={sortedWidgets.map(w => w.id)} 
-              strategy={rectSortingStrategy}
-            >
-              <div className="grid grid-cols-5 gap-6 h-40">
-                {sortedWidgets.map((widget) => (
-                  <DraggableWidget 
-                    key={widget.id} 
-                    id={widget.id}
-                    className="h-full"
-                  >
-                    {widgets[widget.id as keyof typeof widgets]}
-                  </DraggableWidget>
-                ))}
-              </div>
-            </SortableContext>
-          </section>
-        </DndContext>
-
-        {/* Live Routes & Premium Services */}
-        <div className="grid grid-cols-2 gap-6">
+        {/* Unified Control Center */}
+        <div className="grid grid-cols-12 gap-6">
           
-          {/* Live Routes with Enhanced Design */}
-          <div className="glass-card p-6 backdrop-blur-xl border-2 border-blue-500/20 bg-gradient-to-br from-blue-500/5 to-cyan-500/5">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
-                <Route size={20} className="text-white" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-foreground">Live Routes</h3>
-                <p className="text-sm text-muted-foreground">Real-time navigation</p>
-              </div>
-            </div>
-            
-            <div className="space-y-3">
-              {mockFrequentDestinations.slice(0, 3).map((destination, index) => (
-                <div 
-                  key={destination.id} 
-                  className="p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:bg-white/10 transition-all cursor-pointer group"
-                  onClick={() => handleNavigate(destination)}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-400 to-cyan-400 flex items-center justify-center text-white text-sm font-bold">
-                        {index + 1}
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-foreground group-hover:text-blue-400 transition-colors">
-                          {destination.name}
-                        </h4>
-                        <p className="text-sm text-muted-foreground">{destination.address}</p>
-                      </div>
+          {/* Smart Dashboard Widgets - Compact */}
+          <div className="col-span-8">
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
+            >
+              <div className="glass-card backdrop-blur-2xl border border-white/10 p-6 rounded-3xl" 
+                   style={{ background: 'var(--gradient-glass)', boxShadow: 'var(--shadow-glass)' }}>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+                      <Settings size={20} className="text-white" />
                     </div>
-                    <div className="text-right">
-                      <div className="text-sm font-semibold text-blue-400">{destination.eta}</div>
-                      <div className="text-xs text-muted-foreground">{destination.distance}</div>
-                    </div>
+                    <h2 className="text-xl font-bold text-foreground">Control Center</h2>
                   </div>
+                  <button
+                    onClick={resetLayout}
+                    className="flex items-center gap-2 px-3 py-2 bg-muted/30 backdrop-blur-sm rounded-xl border border-white/10 hover:bg-muted/50 transition-all text-sm"
+                  >
+                    <RotateCcw size={14} />
+                    <span>Reset</span>
+                  </button>
                 </div>
-              ))}
-            </div>
+                
+                <SortableContext 
+                  items={sortedWidgets.map(w => w.id)} 
+                  strategy={rectSortingStrategy}
+                >
+                  <div className="grid grid-cols-5 gap-4 h-32">
+                    {sortedWidgets.map((widget) => (
+                      <DraggableWidget 
+                        key={widget.id} 
+                        id={widget.id}
+                        className="h-full"
+                      >
+                        {widgets[widget.id as keyof typeof widgets]}
+                      </DraggableWidget>
+                    ))}
+                  </div>
+                </SortableContext>
+              </div>
+            </DndContext>
           </div>
 
-          {/* Premium Deals */}
-          <div className="glass-card p-6 backdrop-blur-xl border-2 border-emerald-500/20 bg-gradient-to-br from-emerald-500/5 to-green-500/5">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center">
-                <Star size={20} className="text-white" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-foreground">Premium Deals</h3>
-                <p className="text-sm text-muted-foreground">Exclusive offers</p>
-              </div>
-            </div>
-            
-            <div className="space-y-3">
-              {mockDiscountOffers.slice(0, 3).map((offer) => (
-                <div key={offer.id} className="p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 hover:bg-white/10 transition-all cursor-pointer group">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-foreground group-hover:text-emerald-400 transition-colors">
-                      {offer.restaurant}
-                    </h4>
-                    <span className="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-sm font-bold">
-                      {offer.offer}
-                    </span>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-2">{offer.description}</p>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Valid: {offer.validTill}</span>
-                    <span className="text-emerald-400 font-medium">{offer.distance}</span>
-                  </div>
+          {/* AI Insights Panel */}
+          <div className="col-span-4">
+            <div className="glass-card backdrop-blur-2xl border border-white/10 p-6 rounded-3xl h-full" 
+                 style={{ background: 'var(--gradient-glass)', boxShadow: 'var(--shadow-glass)' }}>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-info to-primary flex items-center justify-center">
+                  <TrendingUp size={20} className="text-white" />
                 </div>
-              ))}
+                <div>
+                  <h3 className="font-bold text-foreground">AI Insights</h3>
+                  <p className="text-sm text-muted-foreground">Real-time analytics</p>
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div className="p-3 bg-success/10 border border-success/20 rounded-xl">
+                  <div className="text-sm font-medium text-success">Traffic Status</div>
+                  <div className="text-xs text-success/80">Optimal routes available</div>
+                </div>
+                <div className="p-3 bg-info/10 border border-info/20 rounded-xl">
+                  <div className="text-sm font-medium text-info">Fuel Efficiency</div>
+                  <div className="text-xs text-info/80">+12% improvement today</div>
+                </div>
+                <div className="p-3 bg-warning/10 border border-warning/20 rounded-xl">
+                  <div className="text-sm font-medium text-warning">AI Suggestion</div>
+                  <div className="text-xs text-warning/80">{suggestions.news}</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Enhanced Map Section */}
-        <div className="glass-card p-6 backdrop-blur-xl border-2 border-purple-500/20 bg-gradient-to-br from-purple-500/5 to-pink-500/5 mb-4">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-                <MapPin size={20} className="text-white" />
+        {/* Enhanced Navigation & Services Row */}
+        <div className="grid grid-cols-12 gap-6">
+          
+          {/* Revolutionary Smart Navigation */}
+          <div className="col-span-7">
+            <div className="glass-card backdrop-blur-2xl border border-white/10 p-6 rounded-3xl h-full" 
+                 style={{ background: 'var(--gradient-glass)', boxShadow: 'var(--shadow-glass)' }}>
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary via-accent to-info flex items-center justify-center">
+                    <Route size={24} className="text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                      Smart Navigation
+                    </h3>
+                    <p className="text-sm text-muted-foreground">AI-powered real-time routing</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 px-3 py-2 bg-success/15 rounded-full border border-success/20">
+                    <TrendingUp size={14} className="text-success" />
+                    <span className="text-success font-bold text-sm">Live Traffic</span>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h3 className="text-xl font-bold text-foreground">Smart Navigation</h3>
-                <p className="text-sm text-muted-foreground">AI-powered routing</p>
+              
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                {mockFrequentDestinations.slice(0, 4).map((destination, index) => (
+                  <div 
+                    key={destination.id} 
+                    className="relative p-4 bg-gradient-to-br from-primary/5 to-accent/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-primary/30 transition-all cursor-pointer group hover:scale-105"
+                    onClick={() => handleNavigate(destination)}
+                  >
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-sm font-bold">
+                        {index + 1}
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-bold text-foreground group-hover:text-primary transition-colors">
+                          {destination.name}
+                        </h4>
+                        <p className="text-xs text-muted-foreground truncate">{destination.address}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="text-right">
+                          <div className="text-lg font-bold text-primary">{destination.eta}</div>
+                          <div className="text-xs text-muted-foreground">{destination.distance}</div>
+                        </div>
+                      </div>
+                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                        <MapPin size={16} className="text-primary" />
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 px-3 py-2 bg-emerald-500/20 rounded-full">
-                <TrendingUp size={14} className="text-emerald-400" />
-                <span className="text-emerald-400 font-semibold">Live Traffic</span>
+
+              {/* Live Map Preview */}
+              <div className="rounded-2xl overflow-hidden border border-white/10 shadow-xl">
+                <MapWidget className="h-32" />
               </div>
-              <div className="text-sm text-muted-foreground font-medium">{suggestions.news}</div>
             </div>
           </div>
-          <div className="rounded-2xl overflow-hidden border-2 border-white/10 shadow-xl">
-            <MapWidget className="h-48" />
+
+          {/* Premium Services & Deals */}
+          <div className="col-span-5">
+            <div className="glass-card backdrop-blur-2xl border border-white/10 p-6 rounded-3xl h-full" 
+                 style={{ background: 'var(--gradient-glass)', boxShadow: 'var(--shadow-glass)' }}>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-success via-accent to-warning flex items-center justify-center">
+                  <Star size={24} className="text-white" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold bg-gradient-to-r from-success to-warning bg-clip-text text-transparent">
+                    Premium Hub
+                  </h3>
+                  <p className="text-sm text-muted-foreground">Exclusive offers & services</p>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                {mockDiscountOffers.slice(0, 4).map((offer) => (
+                  <div key={offer.id} className="relative p-4 bg-gradient-to-br from-success/5 to-warning/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-success/30 transition-all cursor-pointer group hover:scale-105">
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex-1">
+                        <h4 className="font-bold text-foreground group-hover:text-success transition-colors mb-1">
+                          {offer.restaurant}
+                        </h4>
+                        <p className="text-xs text-muted-foreground mb-2">{offer.description}</p>
+                      </div>
+                      <span className="px-2 py-1 bg-success/20 text-success rounded-lg text-xs font-bold ml-2">
+                        {offer.offer}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="text-muted-foreground">Until {offer.validTill}</span>
+                      <span className="text-success font-bold">{offer.distance}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Status Bar - Ultra Modern */}
+        <div className="glass-card backdrop-blur-2xl border border-white/10 p-4 rounded-3xl" 
+             style={{ background: 'var(--gradient-glass)', boxShadow: 'var(--shadow-glass)' }}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-6">
+              <div className="flex items-center gap-2 text-sm">
+                <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
+                <span className="text-success font-medium">System Optimal</span>
+              </div>
+              <div className="text-sm text-muted-foreground">{suggestions.news}</div>
+            </div>
+            <div className="flex items-center gap-6 text-sm">
+              <div className="flex items-center gap-2">
+                <TrendingUp size={14} className="text-info" />
+                <span className="text-info font-medium">Performance: +15%</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Signal size={14} className="text-success" />
+                <span className="text-success font-medium">5G Ultra</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
