@@ -16,7 +16,7 @@ export const AuthPage = () => {
   const navigate = useNavigate();
   const { user, signUp, signInWithPassword, signInWithPhone, verifyOTP, signInWithGoogle } = useAuth();
   
-  const [activeTab, setActiveTab] = useState('phone');
+  const [activeTab, setActiveTab] = useState('email');
   const [loading, setLoading] = useState(false);
   
   // Phone auth state
@@ -119,60 +119,9 @@ export const AuthPage = () => {
         </CardHeader>
         <CardContent>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="phone">Phone</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-1">
               <TabsTrigger value="email">Email</TabsTrigger>
-              <TabsTrigger value="google">Google</TabsTrigger>
             </TabsList>
-
-            <TabsContent value="phone" className="space-y-4 mt-4">
-              <div className="space-y-2">
-                <Label htmlFor="phone">Phone Number</Label>
-                <Input
-                  id="phone"
-                  type="tel"
-                  placeholder="+919876543210"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  disabled={otpSent || loading}
-                  className="h-14 text-lg"
-                />
-              </div>
-
-              {otpSent && (
-                <div className="space-y-2">
-                  <Label htmlFor="otp">Enter OTP</Label>
-                  <Input
-                    id="otp"
-                    type="text"
-                    placeholder="123456"
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value)}
-                    maxLength={6}
-                    disabled={loading}
-                    className="h-14 text-lg text-center tracking-widest"
-                  />
-                </div>
-              )}
-
-              <Button
-                onClick={handlePhoneAuth}
-                disabled={loading}
-                className="w-full h-14 text-lg"
-              >
-                {loading ? 'Processing...' : otpSent ? 'Verify OTP' : 'Send OTP'}
-              </Button>
-
-              {otpSent && (
-                <Button
-                  variant="ghost"
-                  onClick={() => setOtpSent(false)}
-                  className="w-full"
-                >
-                  Change Phone Number
-                </Button>
-              )}
-            </TabsContent>
 
             <TabsContent value="email" className="space-y-4 mt-4">
               {isSignUp && (
@@ -230,16 +179,6 @@ export const AuthPage = () => {
                 className="w-full"
               >
                 {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
-              </Button>
-            </TabsContent>
-
-            <TabsContent value="google" className="space-y-4 mt-4">
-              <Button
-                onClick={handleGoogleAuth}
-                disabled={loading}
-                className="w-full h-14 text-lg"
-              >
-                {loading ? 'Processing...' : 'Continue with Google'}
               </Button>
             </TabsContent>
           </Tabs>
