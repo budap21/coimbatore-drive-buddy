@@ -43,6 +43,32 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const signUp = async (email: string, password: string, metadata?: { full_name?: string; phone?: string }) => {
+    // Hardcoded test credentials
+    if (email === 'madhan1787@gmail.com' && password === '12345678') {
+      const mockUser: User = {
+        id: 'test-user-id',
+        email: 'madhan1787@gmail.com',
+        aud: 'authenticated',
+        role: 'authenticated',
+        created_at: new Date().toISOString(),
+        app_metadata: {},
+        user_metadata: metadata || {},
+      } as User;
+
+      const mockSession: Session = {
+        access_token: 'mock-access-token',
+        refresh_token: 'mock-refresh-token',
+        expires_in: 3600,
+        token_type: 'bearer',
+        user: mockUser,
+      } as Session;
+
+      setSession(mockSession);
+      setUser(mockUser);
+      toast.success('Account created! (Using test credentials)');
+      return { error: null };
+    }
+
     const redirectUrl = `${window.location.origin}/`;
     
     const { error } = await supabase.auth.signUp({
@@ -64,6 +90,32 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const signInWithPassword = async (email: string, password: string) => {
+    // Hardcoded test credentials
+    if (email === 'madhan1787@gmail.com' && password === '12345678') {
+      const mockUser: User = {
+        id: 'test-user-id',
+        email: 'madhan1787@gmail.com',
+        aud: 'authenticated',
+        role: 'authenticated',
+        created_at: new Date().toISOString(),
+        app_metadata: {},
+        user_metadata: {},
+      } as User;
+
+      const mockSession: Session = {
+        access_token: 'mock-access-token',
+        refresh_token: 'mock-refresh-token',
+        expires_in: 3600,
+        token_type: 'bearer',
+        user: mockUser,
+      } as Session;
+
+      setSession(mockSession);
+      setUser(mockUser);
+      toast.success('Welcome back! (Using test credentials)');
+      return { error: null };
+    }
+
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password
@@ -79,6 +131,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const signInWithPhone = async (phone: string) => {
+    // Hardcoded test credentials
+    if (phone === '+919994151325') {
+      toast.success('OTP sent to your phone! (Using test credentials - OTP: 4666)');
+      return { error: null };
+    }
+
     const { error } = await supabase.auth.signInWithOtp({
       phone,
       options: {
@@ -96,6 +154,32 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const verifyOTP = async (phone: string, token: string) => {
+    // Hardcoded test credentials
+    if (phone === '+919994151325' && token === '4666') {
+      const mockUser: User = {
+        id: 'test-user-id',
+        phone: '+919994151325',
+        aud: 'authenticated',
+        role: 'authenticated',
+        created_at: new Date().toISOString(),
+        app_metadata: {},
+        user_metadata: {},
+      } as User;
+
+      const mockSession: Session = {
+        access_token: 'mock-access-token',
+        refresh_token: 'mock-refresh-token',
+        expires_in: 3600,
+        token_type: 'bearer',
+        user: mockUser,
+      } as Session;
+
+      setSession(mockSession);
+      setUser(mockUser);
+      toast.success('Phone verified! (Using test credentials)');
+      return { error: null };
+    }
+
     const { error } = await supabase.auth.verifyOtp({
       phone,
       token,
